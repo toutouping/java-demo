@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+ <head>
+  <meta http-equiv="content-type" content="text/html" charset="UTF-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /> 
+  <meta name="renderer" content="webkit" /> 
+  <link rel="stylesheet" type="text/css" href="./websrc/lib/base.css" />
+  <link rel="stylesheet" type="text/css" href="./websrc/index.css" />
+  <link rel="shortcut icon" href="./favicon.ico" />
+  <title>系统维护通知书</title>
+  </head> 
+  <body ng-app="appModule">
+     <div ng-controller="appCtrl" class="word-wrapper">
+         <div id="toolbar" class="toolbar"></div>
+        <!--  <a class="export" href="javascript:void(0)" ng-click="exportWordGet()">
+             <span class="word-icon">W</span>导出.docx
+         </a> -->
+         <a class="export" href="javascript:void(0)" ng-click="exportWordPost()">
+             <span class="word-icon">W</span>导出.docx
+         </a>
+         <p class="word-header">
+             <b>
+                 <span>总行信息技术部系统维护通知书</span>
+             </b>
+         </p>
+         <p class="version">
+             <span class="symbol">〔</span>
+             <span lang="EN-US"ng-bind="word.currentYear"></span>
+             <span class="symbol">〕第</span>
+             <span lang="EN-US" ng-bind="word.versionNo"></span>
+             <span class="symbol" >号</span></p>
+         </p>
+         <div class="line-bold"></div>
+
+         <div class="word-content">
+             <p class="title">
+                 <span ng-bind="word.headerContent"></span>
+             </p>
+             <div id="editor" class="editor"><p>请在此编辑正文内容......</p></div>
+             <div class="footer">
+                 <p class="date" ng-bind="word.dateString"></p>
+                 <div class="line-thin"></div>
+                 <div class="contact">
+                     <span >联系人：{{word.contactUser}}</span>
+                     <span >联系电话：{{word.contactPhone}}</span>
+                 </div>
+                 <div class="line-thin"></div>
+             </div>
+         </div>
+     </div>
+
+    <script type="text/javascript" src="./websrc/lib/jquery-1.10.2.min.js"></script> 
+    <script type="text/javascript" src="./websrc/lib/wangEditor.js"></script>
+    <script type="text/javascript" src="./websrc/lib/jquery.fileDownload.min.js"></script>
+    <script src="./websrc/lib/angular.js"></script>
+    <script src="./websrc/index.js"></script>
+ </body>
+</html>
