@@ -1,11 +1,12 @@
 package com.ssm.promotion.core.exception;
 
 import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.omg.CORBA.SystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.ssm.promotion.core.common.Result;
 
-@ControllerAdvice
 public class BusinessExceptionController {
 
 	protected static Logger logger = LoggerFactory.getLogger(BusinessExceptionController.class);
@@ -28,19 +28,7 @@ public class BusinessExceptionController {
     	result.setMessage("handleSQLException 数据库操作异常");
     	logger.info("handleSQLException - 异常" + ex.getMessage());
     	return result;
-    }  
-    
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)  
-    public @ResponseBody Result<String> handleNotFoundException(HttpServletRequest request,  
-            NotFoundException ex) {
-    	logger.info("handleNotFoundException NOTFoundException");
-    	Result<String> result = new Result<String>();
-    	result.setResultCode(-1);
-    	result.setMessage("NOTFoundException");
-    	logger.info("NOTFoundException - 异常" + ex.getMessage());
-    	return result;
-    }  
+    }
 
     @ExceptionHandler(BusinessException.class)  
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)

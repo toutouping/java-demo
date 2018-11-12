@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * @author llp
  * @project_name java-demo
- * @date 2017-3-1
+ * @date 2018-08-08
  */
 public class DateUtil {
 

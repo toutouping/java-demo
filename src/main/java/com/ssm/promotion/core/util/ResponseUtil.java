@@ -6,10 +6,15 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.ssm.promotion.core.entity.ResultBean;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 /**
  * @author llp
  * @project_name java-demo
- * @date 2017-3-1
+ * @date 2018-08-08
  */
 public class ResponseUtil {
 
@@ -22,6 +27,17 @@ public class ResponseUtil {
         out.close();
     }
 
+    /**
+     * 转换为JSONObject结构
+     * @return
+     */
+    public static JSONObject toJsonObject(ResultBean<JSONArray> resultBean){
+    	JSONObject result = new JSONObject();
+    	result.put("code", resultBean.getCode());
+    	result.put("msg", resultBean.getMsg());
+    	result.put("data", resultBean.getData());
+    	return result;
+    }
 
     /**
      * 设置response header
@@ -29,19 +45,14 @@ public class ResponseUtil {
     public static void setDownResponeHeader(HttpServletResponse response, String title) {
         try {
             response.reset();
-
-            /* application/octet-stream 强制浏览器打开save as对话框来保存文件
-              application/x-msdownload 不同的浏览器有不同的处理方式
-              application/force-download 设置强制下载不打开
-             */
-            response.setContentType("application/x-msdownload");
+            response.setContentType("application/msexcel");
+            
             response.addHeader("Pargam", "no-cache");
             response.addHeader("Cache-Control", "no-cache");
             response.addHeader("Transfer-Encoding", "chunked"); // 当不确定消息长度的时候，可以通过chunk机制来处理这种情况
             // response.setContentType("text/html; charset=UTF-8"); //设置编码字符
-            response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(title, "UTF-8"));
+            response.addHeader("Content-disposition", "attachment;fileName=" + URLEncoder.encode(title, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

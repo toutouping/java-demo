@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.promotion.core.dao.OrderDao">
+    <resultMap type="com.ssm.promotion.core.entity.Order" id="OrderResult">
+        <result property="userName" column="userName"/>
+        <result property="center" column="center"/>
+        <result property="city" column="city"/>
+        <result property="marchineRoom" column="marchineRoom"/>
+        <result property="enterTime" column="enterTime"/>
+    </resultMap>
+    
+    <resultMap type="com.ssm.promotion.core.entity.Center" id="CenterResult">
+        <result property="id" column="id"/>
+        <result property="name" column="center"/>
+    </resultMap>
+    
+    <resultMap type="com.ssm.promotion.core.entity.Reader" id="readerResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="number" column="number"/>
+        <result property="centerId" column="centerid"/>
+    </resultMap>
+    
+    <resultMap type="com.ssm.promotion.core.entity.Params" id="ParamResult">
+        <result property="userId" column="userid"/>
+        <result property="key" column="key"/>
+        <result property="value" column="value"/>
+        <result property="description" column="description"/>
+    </resultMap>
+    
+    <resultMap type="com.ssm.promotion.core.entity.City" id="CityResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    
+    <resultMap type="com.ssm.promotion.core.entity.User" id="UserResult">
+        <result property="id" column="id"/>
+        <result property="userName" column="username"/>
+        <result property="password" column="password"/>
+        <result property="roleId" column="roleid"/>
+        <result property="roleName" column="rolename"/>
+        <result property="permission" column="permission"/>
+    </resultMap>
+    
+    <resultMap type="com.ssm.promotion.core.entity.MachineRoom" id="MachineRoomResult">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="cityId" column="cityid"/>
+        <result property="centerId" column="centerid"/>
+        <result property="ip" column="ip"/>
+        <result property="inReaderId" column="inreaderid"/>
+        <result property="outReaderId" column="outreaderid"/>
+        <result property="city" column="city"/>
+        <result property="center" column="center"/>
+        <result property="inReaderNum" column="inreadernum"/>
+        <result property="inReader" column="inreader"/>
+        <result property="outReaderNum" column="outreadernum"/>
+        <result property="outReader" column="outreader"/>
+    </resultMap>
+    
+    <insert id="addCity" parameterType="Map">
+	    INSERT INTO d_city (id, NAME)
+		VALUES
+			(
+				(
+					SELECT
+						CASE
+					WHEN max(a.id) IS NULL THEN
+						'0'
+					ELSE
+						max(a.id)
+					END
+					FROM
+						d_city a
+				) + 1,
+				#{city}
+			)
+    </insert>
+    
+    <insert id="addCenter" parameterType="Map">
+	    INSERT INTO d_center (id, center)
+		VALUES
+			(
+				(
+					SELECT
+						CASE
+					WHEN max(a.id) IS NULL THEN
+						'0'
+					ELSE
+						max(a.id)
+					END
+					FROM
+						d_center a
+				) + 1,
+				#{center}
+			)
+    </insert>
+    
+    
+    <select id="findMachines" parameterType="Map" resultType="java.util.HashMap">
+    	SELECT
+			d_machineroom.cityid,
+			d_machineroom.centerid,
+			d_machineroom.`code` machineNum,
+			d_machineroom.`name` machineRoom,
+			d_machineroom.ip,
+			d_machineroom.inreaderid,
+			d_machineroom.outreaderid,
+			d_machineroom.id,
+			d_city.`name` city,
+			d_center.center,
+			(select dr.number from d_reader dr where dr.id = d_machineroom.inreaderid) as inReaderNum,
+			(select dr.`name` from d_reader dr where dr.id = d_machineroom.inreaderid) as inReader,
+			(select dr.number from d_reader dr where dr.id = d_machineroom.outreaderid) as outReaderNum,
+			(select dr.`name` from d_reader dr where dr.id = d_machineroom.outreaderid) as outReader
+		FROM
+			d_machineroom
+		LEFT JOIN d_city ON d_machineroom.cityid = d_city.id
+		INNER JOIN d_center ON d_machineroom.centerid = d_center.id 
+		WHERE 1 == 1
+		<if test="centerId != null and centerId != '' ">
+             and d_machineroom.centerid = #{centerId}
+         </if>
+         <if test="cityId != null and cityId != '' ">
+             and d_machineroom.cityid = #{cityId}
+         </if>
+         <if test="machineRoomId != null and machineRoomId != '' ">
+             and d_machineroom.id = #{machineRoomId}
+         </if>  	
+    </select>
+    
+    <select id="workOrders" parameterType="Map" resultType="java.util.HashMap">
+      SELECT
+			r_workorder.id as workorderid, <!-- 工单编号-->
+			r_workorder.description, <!-- 工单描述-->
+			r_workorder.userid bankernum, <!-- 行员编号-->
+			r_workorder.username as banker, <!-- 行员姓名-->
+			r_swipingcard.usernumbertype, <!-- 用户编号类型（供应商，外包，行员）-->
+			r_swipingcard.username, <!-- 用户姓名-->
+			r_swipingcard.userid as idcard, <!-- 用户身份证号码-->
+			r_swipingcard.usernumber, <!-- 用户在供应商或者外包系统的编号-->
+			r_swipingcard.usertype, <!-- 用户类型-->
+			d_machineroom.cityid, <!-- 城市ID-->
+			d_city.`name` as cityname, <!-- 城市名称-->
+			d_machineroom.centerid, <!-- 中心ID-->
+			d_center.center as centername, <!-- 中心名称-->
+			r_workorder.mrid, <!-- 机房ID-->
+			d_machineroom.id machineroomid,
+			d_machineroom.`code`, <!-- 机房在物业管理系统中的编号-->
+			d_machineroom.`name` as roomname, <!-- 机房在物业管理系统中的名称-->
+			r_swipingcard.readerid, <!-- 读卡器ID -->
+			d_reader.number as readernum, <!-- 读卡器在物业管理系统里的编号-->
+			d_reader.`name` as readername,<!-- 读卡器在物业管理系统里的名称-->
+			d_machineroom.inreaderid, <!-- 进入机房刷卡器编号-->
+			d_machineroom.outreaderid, <!-- 离开机房刷卡器编号-->
+			r_swipingcard.liftname, <!-- 电梯-->
+			r_swipingcard.location, <!-- 位置-->
+			date_format(r_swipingcard.time, '%Y-%m-%d %H:%i:%s') as time,  <!-- 刷卡时间 -->
+			r_workorder.permited, <!-- 是否批准-->
+			date_format(r_workorder.begintime, '%Y-%m-%d %H:%i:%s') begintime, <!-- 开始时间-->
+			date_format(r_workorder.endtime, '%Y-%m-%d %H:%i:%s') endtime, <!-- 结束时间-->
+			r_vendor.number vendornum, <!-- 供应商编号（在供应商或者外包系统中的编号）-->
+			r_vendor.id, <!-- 供应商身份证号码-->
+			r_workorder.vendors, <!-- 供应商-->
+			r_vendor.`name` as vendorname, <!-- 供应商姓名-->
+			r_vendor.company as vendorcompany, <!-- 供应商所属公司-->
+			r_swipingcard.company, <!-- 公司-->
+			r_swipingcard.department, <!-- 部门-->
+			r_swipingcard.permission <!-- 权限-->
+		FROM
+			r_swipingcard
+			LEFT JOIN r_workorder ON r_swipingcard.workorderid = r_workorder.id
+			LEFT JOIN r_vendor ON r_vendor.workorderid = r_workorder.id
+			LEFT JOIN d_machineroom ON r_swipingcard.mrid = d_machineroom.id
+			LEFT JOIN d_city ON d_machineroom.cityid = d_city.id
+			LEFT JOIN d_center ON d_machineroom.centerid = d_center.id
+			LEFT JOIN d_reader ON r_swipingcard.readerid = d_reader.id
+		<where>
+	         <if test="workorderId != null and workorderId != '' ">
+	             and r_workorder.id = #{workorderId}
+	         </if>
+	         <if test="userName != null and userName != '' ">
+	             and r_swipingcard.username = #{userName}
+	         </if>
+         </where>
+         ORDER BY r_swipingcard.workorderid, r_swipingcard.time desc
+    </select>
+
+
+    <select id="bankers" parameterType="Map" resultType="java.util.HashMap">
+		 SELECT
+			r_workorder.mrid,
+			r_workorder.id workorderid,
+			r_workorder.userid bankerNum,
+			r_workorder.username banker,
+			r_workorder.permited,
+			date_format(r_workorder.begintime, '%Y-%m-%d %H:%i:%s') begintime, <!-- 开始时间-->
+			date_format(r_workorder.endtime, '%Y-%m-%d %H:%i:%s') endtime, <!-- 结束时间-->
+			r_workorder.vendors,
+			r_workorder.description,
+			d_machineroom.cityid,
+			d_machineroom.centerid,
+			d_machineroom.id machineroomid,
+			d_machineroom.`code`,
+			d_machineroom.`name` AS roomname,
+			d_machineroom.inreaderid,
+			d_machineroom.outreaderid,
+			d_city.`name` AS cityname,
+			d_center.center AS centername
+		FROM
+			r_workorder
+			LEFT JOIN d_machineroom ON r_workorder.mrid = d_machineroom.id
+			LEFT JOIN d_city ON d_machineroom.cityid = d_city.id
+			LEFT JOIN d_center ON d_center.center = d_machineroom.centerid
+		<where>
+	         <if test="workorderId != null and workorderId != '' ">
+	             and r_workorder.id = #{workorderId}
+	         </if>
+	         <if test="banker != null and banker != '' ">
+	             and r_workorder.username = #{banker}
+	         </if>
+	         <if test="bankerNum != null and bankerNum != '' ">
+	             and r_workorder.userid = #{bankerNum}
+	         </if>
+	         <if test="centerId != null and centerId != '' ">
+	             and d_machineroom.centerid = #{centerId}
+	         </if>
+	         <if test="cityId != null and cityId != '' ">
+	             and d_machineroom.cityid = #{cityId}
+	         </if>
+	         <if test="machineRoomId != null and machineRoomId != '' ">
+	             and d_machineroom.id = #{machineRoomId}
+	         </if>
+         </where>
+    </select>
+    
+    <select id="findOrder" parameterType="Map" resultType="java.util.HashMap">
+		  SELECT
+				r_swipingcard.usernumbertype,
+				r_swipingcard.username,
+				r_swipingcard.userid AS idcard,
+				r_swipingcard.usernumber,
+				r_swipingcard.usertype,
+				r_workorder.description,
+				r_workorder.userid bankernum,
+				r_workorder.username AS banker,
+				r_workorder.mrid,
+				r_swipingcard.readerid,
+				d_reader.number AS readernum,
+				d_reader.`name` AS readername,
+				d_machineroom.cityid,
+				d_machineroom.centerid,
+				d_machineroom.id machineroomid,
+				d_machineroom.`code`,
+				d_machineroom.`name` AS roomname,
+				d_machineroom.inreaderid,
+				d_machineroom.outreaderid,
+				d_city.`name` AS cityname,
+				d_center.center AS centername,
+				r_swipingcard.liftname,
+				r_swipingcard.workorderid,
+				r_swipingcard.location,
+				date_format(
+					r_swipingcard.time,
+					'%Y-%m-%d %H:%i:%s'
+				) AS time,
+				r_workorder.permited,
+				date_format(
+					r_workorder.begintime,
+					'%Y-%m-%d %H:%i:%s'
+				) begintime,
+				date_format(
+					r_workorder.endtime,
+					'%Y-%m-%d %H:%i:%s'
+				) endtime,
+				r_workorder.vendors,
+				r_swipingcard.company,
+				r_swipingcard.department,
+				r_swipingcard.permission
+			FROM
+				r_swipingcard
+			LEFT JOIN r_workorder ON r_swipingcard.workorderid = r_workorder.id
+			LEFT JOIN d_machineroom ON r_swipingcard.mrid = d_machineroom.id
+			LEFT JOIN d_city ON d_machineroom.cityid = d_city.id
+			LEFT JOIN d_center ON d_machineroom.centerid = d_center.id
+			LEFT JOIN d_reader ON r_swipingcard.readerid = d_reader.id
+		<where>
+	         <if test="workorderId != null and workorderId != '' ">
+	             and r_workorder.id = #{workorderId}
+	         </if>
+	         <if test="centerId != null and centerId != '' ">
+	             and d_machineroom.centerid = #{centerId}
+	         </if>
+	         <if test="cityId != null and cityId != '' ">
+	             and d_machineroom.cityid = #{cityId}
+	         </if>
+	         <if test="machineRoomId != null and machineRoomId != '' ">
+	             and d_machineroom.id = #{machineRoomId}
+	         </if>
+	         <if test="company != null and company != '' ">
+	             and r_swipingcard.company = #{company}
+	         </if>
+	         <if test="department != null and department != '' ">
+	             and r_swipingcard.department = #{department}
+	         </if>
+	         <if test="banker != null and banker != '' ">
+	             and r_workorder.username = #{banker}
+	         </if>
+	         <if test="userName != null and userName != '' ">
+	             and r_swipingcard.username = #{userName}
+	         </if>
+	         <if test="startTime != null and startTime != '' ">
+	             <![CDATA[  and DATE_FORMAT(r_swipingcard.time, '%Y-%m-%d') >= DATE_FORMAT(#{startTime}, '%Y-%m-%d')]]>
+	         </if>
+	         <if test="endTime != null and endTime != '' ">
+	             <![CDATA[  and DATE_FORMAT(r_swipingcard.time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]>
+	         </if>
+         </where>
+         group by r_swipingcard.workorderid, r_swipingcard.username
+         ORDER BY r_swipingcard.workorderid, r_swipingcard.time desc
+    </select>
+    
+    <select id="findCenter" resultMap="CenterResult">
+        select id, center from d_center
+    </select>
+    
+    <select id="findCity" resultMap="CityResult">
+        select id, name from d_city
+    </select>
+    
+    <delete id="deleteUser" parameterType="Map">
+        delete from d_user where id = #{userId}
+    </delete>
+    
+    <select id="roleList" resultMap="UserResult">
+        SELECT
+			d_role.id roleid,
+			d_role.`name` "rolename",
+			d_role.permission
+		FROM
+			d_role
+    </select>
+
+    <select id="getReaderCount" parameterType="Map" resultType="int">
+        select count(*) from d_reader
+        <where>
+		     <if test="number != null and number != '' ">
+	             and number = #{number}
+	         </if>
+		     <if test="name != null and name != '' ">
+	             and name = #{name}
+	         </if>
+        </where>
+    </select>
+    
+    <select id="getUserCount" parameterType="com.ssm.promotion.core.entity.User" resultType="int">
+        select count(*) from d_user
+        <where>
+		     <if test="userName != null and userName != '' ">
+	             and username = #{userName}
+	         </if>
+        </where>
+    </select>
+    
+    <select id="getCenterCount" parameterType="Map" resultType="int">
+        select count(*) from d_center
+        <where>
+		     <if test="center != null and center != '' ">
+	             and center = #{center}
+	         </if>
+        </where>
+    </select>
+    
+    <select id="getCityCount" parameterType="Map" resultType="int">
+        select count(*) from d_city
+        <where>
+		     <if test="city != null and city != '' ">
+	             and name = #{city}
+	         </if>
+        </where>
+    </select>
+    
+    <select id="searchParamList" parameterType="Map" resultMap="ParamResult">
+        SELECT d_config.key, userid, d_config.value, description
+		FROM d_config where userid = 0
+	     <if test="userId != null and userId != '' ">
+             or userid = #{userId}
+         </if>
+    </select>
+    
+    <update id="updateUserParam"  parameterType="java.util.List">  
+	    <foreach collection="list" item="item"  index="index" open="" close="" separator=";">
+	        update d_config
+	        <set>
+	            value = #{item.value, jdbcType=VARCHAR}
+	        </set>
+	        where userid = #{item.userId} and d_config.key = #{item.key, jdbcType=VARCHAR}
+	    </foreach>      
+	</update>
+	
+    <insert id="insertUserParam"  parameterType="java.util.List"> 
+        INSERT INTO d_config (userid, d_config.key, value, description)
+        VALUES 
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId}, #{item.key}, #{item.value}, #{item.description})
+        </foreach>
+	</insert>
+	
+    <select id="userList" resultMap="UserResult">
+        SELECT
+			d_user.roleid,
+			d_user.username,
+			d_user.`password`,
+			d_user.id,
+			d_role.`name` rolename,
+			d_role.permission
+		FROM
+			d_user
+		LEFT JOIN d_role ON d_role.id = d_user.roleid
+		<where>
+		     <if test="roleId != null and roleId != '' ">
+	             and roleid = #{roleId}
+	         </if>
+		     <if test="userName != null and userName != '' ">
+	             and username like #{userName}
+	         </if>
+         </where>
+    </select>
+    
+    <select id="readerList" parameterType="java.lang.String" resultMap="readerResult">
+        select id, name, number, centerid from d_reader
+         <where>
+		     <if test="centerId != null and centerId != '' ">
+	             and centerid = #{centerId}
+	         </if>
+         </where>
+    </select>
+    
+    <select id="findMachineRoom" parameterType="Map" resultMap="MachineRoomResult">
+        SELECT
+			d_machineroom.id,
+			d_machineroom.`code`,
+			d_machineroom.`name`,
+			d_machineroom.cityid,
+			d_machineroom.centerid,
+			d_machineroom.ip,
+			d_machineroom.inreaderid,
+			d_machineroom.outreaderid,
+			d_city.`name` city,
+			d_center.center,
+			(select dr.number from d_reader dr where dr.id = d_machineroom.inreaderid) as inReaderNum,
+			(select dr.`name` from d_reader dr where dr.id = d_machineroom.inreaderid) as inReader,
+			(select dr.number from d_reader dr where dr.id = d_machineroom.outreaderid) as outReaderNum,
+			(select dr.`name` from d_reader dr where dr.id = d_machineroom.outreaderid) as outReader
+		FROM
+			d_machineroom
+		LEFT JOIN d_city ON d_machineroom.cityid = d_city.id
+		INNER JOIN d_center ON d_machineroom.centerid = d_center.id
+         <where>
+		     <if test="centerId != null and centerId != '' ">
+	             and d_machineroom.centerid = #{centerId}
+	         </if>
+	         <if test="cityId != null and cityId != '' ">
+	             and d_machineroom.cityid = #{cityId}
+	         </if>
+	         <if test="machineRoomId != null and machineRoomId != '' ">
+	             and d_machineroom.id = #{machineRoomId}
+	         </if> 
+	         <if test="code != null and code != '' ">
+	             and d_machineroom.`code` = #{code}
+	         </if>
+         </where>
+    </select>
+    
+    <delete id="deleteMachineRoom" parameterType="Map">
+        delete from d_machineroom where id=#{machineRoomId}
+    </delete>
+    
+    <delete id="deleteReader" parameterType="com.ssm.promotion.core.entity.Reader">
+        delete from d_reader where id = #{id} and centerid = #{centerId}
+    </delete>
+    
+    <update id="editReader" parameterType="com.ssm.promotion.core.entity.Reader">
+        update d_reader set name = #{name} where id = #{id}<!-- , number = #{number} -->
+    </update>
+    
+    <delete id="deleteCity" parameterType="com.ssm.promotion.core.entity.City">
+        delete from d_city where id = #{id}
+    </delete>
+    
+    <update id="editCity" parameterType="com.ssm.promotion.core.entity.City">
+        update d_city set name = #{name} where id = #{id}
+    </update>
+    
+    <delete id="deleteCenter" parameterType="com.ssm.promotion.core.entity.Center">
+        delete from d_center where id = #{id}
+    </delete>
+    
+    <update id="editCenter" parameterType="com.ssm.promotion.core.entity.Center">
+        update d_center set center = #{name} where id = #{id}
+    </update>
+    
+    <insert id="addMachineRoom" parameterType="com.ssm.promotion.core.entity.MachineRoom">
+	    INSERT INTO d_machineroom (cityid, centerid, code, name, ip, inreaderid, outreaderid)
+		VALUES (#{cityId}, #{centerId}, #{code}, #{name}, #{ip}, #{inReaderId}, #{outReaderId})
+    </insert>
+    
+    <insert id="addReader" parameterType="com.ssm.promotion.core.entity.Reader">
+	    INSERT INTO d_reader (id, centerid, name, number)
+		VALUES
+			(
+				(
+					SELECT
+						CASE
+					WHEN max(a.id) IS NULL THEN
+						0
+					ELSE
+						max(a.id)
+					END
+					FROM
+						d_reader a
+				) + 1,
+				#{centerId}, #{name}, #{number}
+			)
+    </insert>
+    
+    <insert id="addUser" parameterType="com.ssm.promotion.core.entity.User">
+	    INSERT INTO d_user (roleid, username, password)
+		VALUES (#{roleId}, #{userName}, #{password})
+    </insert>
+    
+    <update id="editMachineRoom" parameterType="com.ssm.promotion.core.entity.MachineRoom">
+	    UPDATE d_machineroom 
+	       SET cityid = #{cityId},
+		       centerid =  #{centerId},
+		       code =  #{code}, 
+		       name =  #{name},
+		       ip =  #{ip}, 
+		       inreaderid =  #{inReaderId},
+		       outreaderid =  #{outReaderId}
+         WHERE id = #{id}
+    </update>
+</mapper> 

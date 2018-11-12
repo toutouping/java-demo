@@ -29,6 +29,7 @@
     <!-- 数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
@@ -51,7 +52,7 @@
         <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
         <property name="testOnReturn" value="${druid.testOnReturn}"/>
 
-        <!-- 打开PSCache，并且指定每个连接上PSCache的大小  如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。-->
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小  如果用Oracle，则把poolPreparedStatements配置为true，数据库可以配置为false。-->
         <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}"/>
         <property name="maxPoolPreparedStatementPerConnectionSize"
                   value="${druid.maxPoolPreparedStatementPerConnectionSize}"/>
@@ -62,6 +63,7 @@
         <!--Start 慢sql监控及log4j设置-->
         <property name="proxyFilters">
             <list>
+                <ref bean="wall-filter"/>
                 <ref bean="stat-filter"/>
                 <ref bean="log-filter"/>
             </list>
@@ -81,6 +83,17 @@
     <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
         <property name="dataSourceLogEnabled" value="true" />
         <property name="statementExecutableSqlLogEnable" value="true" />
+    </bean>
+    
+
+    <!--允许多个批量处理配置==修改后存在SQL注入风险 -->
+    <bean id="myWallConfig" class="com.alibaba.druid.wall.WallConfig">  
+            <property name="multiStatementAllow" value="true" />  
+    </bean>  
+     
+    <!--重新定义过滤器，允许多个批量处理配置 默认是wall-->
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <property name="config" ref="myWallConfig"/>  
     </bean>
 
 </beans>

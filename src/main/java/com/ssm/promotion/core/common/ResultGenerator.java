@@ -28,6 +28,7 @@ public class ResultGenerator {
         if (message == null || message.length() < 1) {
             message = DEFAULT_FAIL_MESSAGE;
         }
+        result.setData("error");
         result.setMessage(message);
         return result;
     }

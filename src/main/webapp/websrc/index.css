@@ -126,9 +126,28 @@ html, body{
     font-family: SimSun;
     height: 22.7pt;
     line-height: 22.7pt;
+    border-top: solid 1px;
+    border-bottom: solid 1px;    
 }
 .word-wrapper .footer .contact span{
     margin-right: 50px;
+}
+.loading {
+    left: 50%;
+    top: 40%;
+    margin-left: -50px;
+    margin-top: -50px;
+    position: fixed;
+    z-index: 99999;
+}
+.loading-bg{
+	position: fixed;
+	z-index: 1;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+    background: rgba(0,0,0,0.1);
 }
 .word-wrapper .w-e-text p, .w-e-text h1,
 .word-wrapper .w-e-text h2, .w-e-text h3, 

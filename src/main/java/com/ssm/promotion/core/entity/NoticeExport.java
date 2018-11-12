@@ -1,11 +1,15 @@
 package com.ssm.promotion.core.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class NoticeExport implements Serializable {
 
-    private String versionNo = "";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String versionNo = "";
     private String headerContent = "";
     private String dateString = null;
     private String contactUser = "";
@@ -14,7 +18,8 @@ public class NoticeExport implements Serializable {
     private String detailContent = "";
 
     public String toString(){
-        return "versionNo:" + this.versionNo + "headerContent:" + this.headerContent + "contactUser:" + this.contactUser;
+        return "versionNo:" + this.versionNo + "headerContent:" + this.headerContent + "contactUser:" + this.contactUser
+        		 + "contactPhone:" + this.contactPhone + "detailContent:" + this.detailContent;
     }
     public String getDetailContent() {
         return detailContent;
@@ -23,7 +28,7 @@ public class NoticeExport implements Serializable {
         this.detailContent = detailContent;
     }
     public String getHeaderContent() {
-        return headerContent.replaceAll("&nbsp;", " ");
+        return headerContent.replace("&nbsp;", " ");
     }
 
     public void setHeaderContent(String headerContent) {

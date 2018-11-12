@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() :
-	typeof define === "function" && define.amd ? define(factory) :
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
 	(global.wangEditor = factory());
-}(this, (function () { "use strict";
+}(this, (function () { 'use strict';
 
 /*
     poly-fill
@@ -11,12 +11,12 @@
 var polyfill = function () {
 
     // Object.assign
-    if (typeof Object.assign != "function") {
+    if (typeof Object.assign != 'function') {
         Object.assign = function (target, varArgs) {
             // .length of function is 2
             if (target == null) {
                 // TypeError if undefined or null
-                throw new TypeError("Cannot convert undefined or null to object");
+                throw new TypeError('Cannot convert undefined or null to object');
             }
 
             var to = Object(target);
@@ -56,7 +56,7 @@ var polyfill = function () {
 // 根据 html 代码片段创建 dom 对象
 function createElemByHTML(html) {
     var div = void 0;
-    div = document.createElement("div");
+    div = document.createElement('div');
     div.innerHTML = html;
     return div.children;
 }
@@ -110,10 +110,10 @@ function DomElement(selector) {
     } else if (isDOMList(selector) || selector instanceof Array) {
         // DOM List 或者数组
         selectorResult = selector;
-    } else if (typeof selector === "string") {
+    } else if (typeof selector === 'string') {
         // 字符串
-        selector = selector.replace("/\n/mg", "").trim();
-        if (selector.indexOf("<") === 0) {
+        selector = selector.replace('/\n/mg', '').trim();
+        if (selector.indexOf('<') === 0) {
             // 如 <div>
             selectorResult = createElemByHTML(selector);
         } else {
@@ -262,7 +262,7 @@ DomElement.prototype = {
                     arr.push(className);
                 }
                 // 修改 elem.class
-                elem.className = arr.join(" ");
+                elem.className = arr.join(' ');
             } else {
                 elem.className = className;
             }
@@ -288,28 +288,28 @@ DomElement.prototype = {
                     return true;
                 });
                 // 修改 elem.class
-                elem.className = arr.join(" ");
+                elem.className = arr.join(' ');
             }
         });
     },
 
     // 修改 css
     css: function css(key, val) {
-        var currentStyle = key + ":" + val + ";";
+        var currentStyle = key + ':' + val + ';';
         return this.forEach(function (elem) {
-            var style = (elem.getAttribute("style") || "").trim();
+            var style = (elem.getAttribute('style') || '').trim();
             var styleArr = void 0,
                 resultArr = [];
             if (style) {
                 // 将 style 按照 ; 拆分为数组
-                styleArr = style.split(";");
+                styleArr = style.split(';');
                 styleArr.forEach(function (item) {
                     // 对每项样式，按照 : 拆分为 key 和 value
-                    var arr = item.split(":").map(function (i) {
+                    var arr = item.split(':').map(function (i) {
                         return i.trim();
                     });
                     if (arr.length === 2) {
-                        resultArr.push(arr[0] + ":" + arr[1]);
+                        resultArr.push(arr[0] + ':' + arr[1]);
                     }
                 });
                 // 替换或者新增
@@ -324,22 +324,22 @@ DomElement.prototype = {
                     resultArr.push(currentStyle);
                 }
                 // 结果
-                elem.setAttribute("style", resultArr.join("; "));
+                elem.setAttribute('style', resultArr.join('; '));
             } else {
                 // style 无值
-                elem.setAttribute("style", currentStyle);
+                elem.setAttribute('style', currentStyle);
             }
         });
     },
 
     // 显示
     show: function show() {
-        return this.css("display", "block");
+        return this.css('display', 'block');
     },
 
     // 隐藏
     hide: function hide() {
-        return this.css("display", "none");
+        return this.css('display', 'none');
     },
 
     // 获取子节点
@@ -414,7 +414,7 @@ DomElement.prototype = {
             // 获取 text
             var elem = this[0];
             return elem.innerHTML.replace(/<.*?>/g, function () {
-                return "";
+                return '';
             });
         } else {
             // 设置 text
@@ -464,7 +464,7 @@ DomElement.prototype = {
         }
 
         var elem = _currentElem || this[0];
-        if (elem.nodeName === "BODY") {
+        if (elem.nodeName === 'BODY') {
             return null;
         }
 
@@ -546,62 +546,62 @@ $.offAll = function () {
 var config = {
 
     // 默认菜单配置
-    menus: ["head", "bold", "fontSize", "fontName", "italic", "underline", "strikeThrough", "foreColor", "backColor", "link", "list", "justify", "quote", "emoticon", "image", "table", "video", "code", "undo", "redo"],
+    menus: ['head', 'bold', 'fontSize', 'fontName', 'italic', 'underline', 'strikeThrough', 'foreColor', 'backColor', 'link', 'list', 'justify', 'quote', 'emoticon', 'image', 'table', 'video', 'code', 'undo', 'redo'],
 
-    fontNames: ["宋体", "微软雅黑", "Arial", "Tahoma", "Verdana"],
+    fontNames: ['宋体', '微软雅黑', 'Arial', 'Tahoma', 'Verdana'],
 
-    colors: ["#000000", "#eeece0", "#1c487f", "#4d80bf", "#c24f4a", "#8baa4a", "#7b5ba1", "#46acc8", "#f9963b", "#ffffff"],
+    colors: ['#000000', '#eeece0', '#1c487f', '#4d80bf', '#c24f4a', '#8baa4a', '#7b5ba1', '#46acc8', '#f9963b', '#ffffff'],
 
     // // 语言配置
     // lang: {
-    //     "设置标题": "title",
-    //     "正文": "p",
-    //     "链接文字": "link text",
-    //     "链接": "link",
-    //     "插入": "insert",
-    //     "创建": "init"
+    //     '设置标题': 'title',
+    //     '正文': 'p',
+    //     '链接文字': 'link text',
+    //     '链接': 'link',
+    //     '插入': 'insert',
+    //     '创建': 'init'
     // },
 
     // 表情
     emotions: [{
         // tab 的标题
-        title: "默认",
-        // type -> "emoji" / "image"
-        type: "image",
+        title: '默认',
+        // type -> 'emoji' / 'image'
+        type: 'image',
         // content -> 数组
         content: [{
-            alt: "[坏笑]",
-            src: "http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png"
+            alt: '[坏笑]',
+            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png'
         }, {
-            alt: "[舔屏]",
-            src: "http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png"
+            alt: '[舔屏]',
+            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png'
         }, {
-            alt: "[污]",
-            src: "http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/3c/pcmoren_wu_org.png"
+            alt: '[污]',
+            src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/3c/pcmoren_wu_org.png'
         }]
     }, {
         // tab 的标题
-        title: "新浪",
-        // type -> "emoji" / "image"
-        type: "image",
+        title: '新浪',
+        // type -> 'emoji' / 'image'
+        type: 'image',
         // content -> 数组
         content: [{
-            src: "http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif",
-            alt: "[草泥马]"
+            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
+            alt: '[草泥马]'
         }, {
-            src: "http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif",
-            alt: "[神马]"
+            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
+            alt: '[神马]'
         }, {
-            src: "http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif",
-            alt: "[浮云]"
+            src: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif',
+            alt: '[浮云]'
         }]
     }, {
         // tab 的标题
-        title: "emoji",
-        // type -> "emoji" / "image"
-        type: "emoji",
+        title: 'emoji',
+        // type -> 'emoji' / 'image'
+        type: 'emoji',
         // content -> 数组
-        content: "😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😓 😪 😴 🙄 🤔 😬 🤐".split(/\s/)
+        content: '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😓 😪 😴 🙄 🤔 😬 🤐'.split(/\s/)
     }],
 
     // 编辑区域的 z-index
@@ -615,14 +615,14 @@ var config = {
         // text 是插入的文字
         // link 是插入的链接
         return true; // 返回 true 即表示成功
-        // return "校验失败" // 返回字符串即表示失败的提示信息
+        // return '校验失败' // 返回字符串即表示失败的提示信息
     },
 
     // 插入网络图片的校验
     linkImgCheck: function linkImgCheck(src) {
         // src 即图片的地址
         return true; // 返回 true 即表示成功
-        // return "校验失败"  // 返回字符串即表示失败的提示信息
+        // return '校验失败'  // 返回字符串即表示失败的提示信息
     },
 
     // 粘贴过滤样式，默认开启
@@ -662,19 +662,19 @@ var config = {
     uploadImgShowBase64: false,
 
     // 上传图片，server 地址（如果有值，则 base64 格式的配置则失效）
-    // uploadImgServer: "/upload",
+    // uploadImgServer: '/upload',
 
     // 自定义配置 filename
-    uploadFileName: "",
+    uploadFileName: '',
 
     // 上传图片的自定义参数
     uploadImgParams: {
-        // token: "abcdef12345"
+        // token: 'abcdef12345'
     },
 
     // 上传图片的自定义header
     uploadImgHeaders: {
-        // "Accept": "text/x-json"
+        // 'Accept': 'text/x-json'
     },
 
     // 配置 XHR withCredentials
@@ -686,7 +686,7 @@ var config = {
     // 上传图片 hook 
     uploadImgHooks: {
         // customInsert: function (insertLinkImg, result, editor) {
-        //     console.log("customInsert")
+        //     console.log('customInsert')
         //     // 图片上传并返回结果，自定义插入图片的事件，而不是编辑器自动插入图片
         //     const data = result.data1 || []
         //     data.forEach(link => {
@@ -696,10 +696,10 @@ var config = {
         before: function before(xhr, editor, files) {
             // 图片上传之前触发
 
-            // 如果返回的结果是 {prevent: true, msg: "xxxx"} 则表示用户放弃上传
+            // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
             // return {
             //     prevent: true,
-            //     msg: "放弃上传"
+            //     msg: '放弃上传'
             // }
         },
         success: function success(xhr, editor, result) {
@@ -737,7 +737,7 @@ var UA = {
 
     // 是否 IE
     isIE: function isIE() {
-        return "ActiveXObject" in window;
+        return 'ActiveXObject' in window;
     }
 };
 
@@ -778,9 +778,9 @@ function getRandom(prefix) {
 // 替换 html 特殊字符
 function replaceHtmlSymbol(html) {
     if (html == null) {
-        return "";
+        return '';
     }
-    return html.replace(/</gm, "&lt;").replace(/>/gm, "&gt;").replace(/'/gm, "&quot;").replace(/(\r\n|\r|\n)/g, "<br/>");
+    return html.replace(/</gm, '&lt;').replace(/>/gm, '&gt;').replace(/"/gm, '&quot;').replace(/(\r\n|\r|\n)/g, '<br/>');
 }
 
 // 返回百分比的格式
@@ -788,7 +788,7 @@ function replaceHtmlSymbol(html) {
 
 // 判断是不是 function
 function isFunction(fn) {
-    return typeof fn === "function";
+    return typeof fn === 'function';
 }
 
 /*
@@ -797,8 +797,8 @@ function isFunction(fn) {
 // 构造函数
 function Bold(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-bold'></i>\n        </div>");
-    this.type = "click";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-bold"></i>\n        </div>');
+    this.type = 'click';
 
     // 当前是否 active 状态
     this._active = false;
@@ -821,7 +821,7 @@ Bold.prototype = {
         }
 
         // 执行 bold 命令
-        editor.cmd.do("bold");
+        editor.cmd.do('bold');
 
         if (isSeleEmpty) {
             // 需要将选取折叠起来
@@ -834,12 +834,12 @@ Bold.prototype = {
     tryChangeActive: function tryChangeActive(e) {
         var editor = this.editor;
         var $elem = this.$elem;
-        if (editor.cmd.queryCommandState("bold")) {
+        if (editor.cmd.queryCommandState('bold')) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -880,7 +880,7 @@ function DropList(menu, opt) {
     this.menu = menu;
     this.opt = opt;
     // 容器
-    var $container = $("<div class='w-e-droplist'></div>");
+    var $container = $('<div class="w-e-droplist"></div>');
 
     // 标题
     var $title = opt.$title;
@@ -891,16 +891,16 @@ function DropList(menu, opt) {
         titleHtml = replaceLang(editor, titleHtml);
         $title.html(titleHtml);
 
-        $title.addClass("w-e-dp-title");
+        $title.addClass('w-e-dp-title');
         $container.append($title);
     }
 
     var list = opt.list || [];
-    var type = opt.type || "list"; // "list" 列表形式（如“标题”菜单） / "inline-block" 块状形式（如“颜色”菜单）
+    var type = opt.type || 'list'; // 'list' 列表形式（如“标题”菜单） / 'inline-block' 块状形式（如“颜色”菜单）
     var onClick = opt.onClick || _emptyFn;
 
     // 加入 DOM 并绑定事件
-    var $list = $("<ul class='" + (type === "list" ? "w-e-list" : "w-e-block") + "'></ul>");
+    var $list = $('<ul class="' + (type === 'list' ? 'w-e-list' : 'w-e-block') + '"></ul>');
     $container.append($list);
     list.forEach(function (item) {
         var $elem = item.$elem;
@@ -911,11 +911,11 @@ function DropList(menu, opt) {
         $elem.html(elemHtml);
 
         var value = item.value;
-        var $li = $("<li class='w-e-item'></li>");
+        var $li = $('<li class="w-e-item"></li>');
         if ($elem) {
             $li.append($elem);
             $list.append($li);
-            $li.on("click", function (e) {
+            $li.on('click', function (e) {
                 onClick(value);
 
                 // 隐藏
@@ -927,7 +927,7 @@ function DropList(menu, opt) {
     });
 
     // 绑定隐藏事件
-    $container.on("mouseleave", function (e) {
+    $container.on('mouseleave', function (e) {
         _this.hideTimeoutId = setTimeout(function () {
             _this.hide();
         }, 0);
@@ -965,7 +965,7 @@ DropList.prototype = {
             // 加入 DOM 之前先定位位置
             var menuHeight = $menuELem.getSizeData().height || 0;
             var width = this.opt.width || 100; // 默认为 100
-            $container.css("margin-top", menuHeight + "px").css("width", width + "px");
+            $container.css('margin-top', menuHeight + 'px').css('width', width + 'px');
 
             // 加入到 DOM
             $menuELem.append($container);
@@ -1001,8 +1001,8 @@ function Head(editor) {
     var _this = this;
 
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-header'></i></div>");
-    this.type = "droplist";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-header"></i></div>');
+    this.type = 'droplist';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1010,9 +1010,9 @@ function Head(editor) {
     // 初始化 droplist
     this.droplist = new DropList(this, {
         width: 100,
-        $title: $("<p>设置标题</p>"),
-        type: "list", // droplist 以列表形式展示
-        list: [{ $elem: $("<h1>H1</h1>"), value: "<h1>" }, { $elem: $("<h2>H2</h2>"), value: "<h2>" }, { $elem: $("<h3>H3</h3>"), value: "<h3>" }, { $elem: $("<h4>H4</h4>"), value: "<h4>" }, { $elem: $("<h5>H5</h5>"), value: "<h5>" }, { $elem: $("<p>正文</p>"), value: "<p>" }],
+        $title: $('<p>设置标题</p>'),
+        type: 'list', // droplist 以列表形式展示
+        list: [{ $elem: $('<h1>H1</h1>'), value: '<h1>' }, { $elem: $('<h2>H2</h2>'), value: '<h2>' }, { $elem: $('<h3>H3</h3>'), value: '<h3>' }, { $elem: $('<h4>H4</h4>'), value: '<h4>' }, { $elem: $('<h5>H5</h5>'), value: '<h5>' }, { $elem: $('<p>正文</p>'), value: '<p>' }],
         onClick: function onClick(value) {
             // 注意 this 是指向当前的 Head 对象
             _this._command(value);
@@ -1035,7 +1035,7 @@ Head.prototype = {
             return;
         }
 
-        editor.cmd.do("formatBlock", value);
+        editor.cmd.do('formatBlock', value);
     },
 
     // 试图改变 active 状态
@@ -1043,13 +1043,13 @@ Head.prototype = {
         var editor = this.editor;
         var $elem = this.$elem;
         var reg = /^h/i;
-        var cmdValue = editor.cmd.queryCommandValue("formatBlock");
+        var cmdValue = editor.cmd.queryCommandValue('formatBlock');
         if (reg.test(cmdValue)) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -1063,8 +1063,8 @@ function FontSize(editor) {
     var _this = this;
 
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-text-heigh'></i></div>");
-    this.type = "droplist";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-text-heigh"></i></div>');
+    this.type = 'droplist';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1072,9 +1072,9 @@ function FontSize(editor) {
     // 初始化 droplist
     this.droplist = new DropList(this, {
         width: 160,
-        $title: $("<p>字号</p>"),
-        type: "list", // droplist 以列表形式展示
-        list: [{ $elem: $("<span style='font-size: x-small;'>x-small</span>"), value: "1" }, { $elem: $("<span style='font-size: small;'>small</span>"), value: "2" }, { $elem: $("<span>normal</span>"), value: "3" }, { $elem: $("<span style='font-size: large;'>large</span>"), value: "4" }, { $elem: $("<span style='font-size: x-large;'>x-large</span>"), value: "5" }, { $elem: $("<span style='font-size: xx-large;'>xx-large</span>"), value: "6" }],
+        $title: $('<p>字号</p>'),
+        type: 'list', // droplist 以列表形式展示
+        list: [{ $elem: $('<span style="font-size: x-small;">x-small</span>'), value: '1' }, { $elem: $('<span style="font-size: small;">small</span>'), value: '2' }, { $elem: $('<span>normal</span>'), value: '3' }, { $elem: $('<span style="font-size: large;">large</span>'), value: '4' }, { $elem: $('<span style="font-size: x-large;">x-large</span>'), value: '5' }, { $elem: $('<span style="font-size: xx-large;">xx-large</span>'), value: '6' }],
         onClick: function onClick(value) {
             // 注意 this 是指向当前的 FontSize 对象
             _this._command(value);
@@ -1089,7 +1089,7 @@ FontSize.prototype = {
     // 执行命令
     _command: function _command(value) {
         var editor = this.editor;
-        editor.cmd.do("fontSize", value);
+        editor.cmd.do('fontSize', value);
     }
 };
 
@@ -1102,8 +1102,8 @@ function FontName(editor) {
     var _this = this;
 
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-font'></i></div>");
-    this.type = "droplist";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-font"></i></div>');
+    this.type = 'droplist';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1115,10 +1115,10 @@ function FontName(editor) {
     // 初始化 droplist
     this.droplist = new DropList(this, {
         width: 100,
-        $title: $("<p>字体</p>"),
-        type: "list", // droplist 以列表形式展示
+        $title: $('<p>字体</p>'),
+        type: 'list', // droplist 以列表形式展示
         list: fontNames.map(function (fontName) {
-            return { $elem: $("<span style='font-family: " + fontName + ";'>" + fontName + "</span>"), value: fontName };
+            return { $elem: $('<span style="font-family: ' + fontName + ';">' + fontName + '</span>'), value: fontName };
         }),
         onClick: function onClick(value) {
             // 注意 this 是指向当前的 FontName 对象
@@ -1133,7 +1133,7 @@ FontName.prototype = {
 
     _command: function _command(value) {
         var editor = this.editor;
-        editor.cmd.do("fontName", value);
+        editor.cmd.do('fontName', value);
     }
 };
 
@@ -1167,31 +1167,31 @@ Panel.prototype = {
         }
 
         var editor = menu.editor;
-        var $body = $("body");
+        var $body = $('body');
         var $textContainerElem = editor.$textContainerElem;
         var opt = this.opt;
 
         // panel 的容器
-        var $container = $("<div class='w-e-panel-container'></div>");
+        var $container = $('<div class="w-e-panel-container"></div>');
         var width = opt.width || 300; // 默认 300px
-        $container.css("width", width + "px").css("margin-left", (0 - width) / 2 + "px");
+        $container.css('width', width + 'px').css('margin-left', (0 - width) / 2 + 'px');
 
         // 添加关闭按钮
-        var $closeBtn = $("<i class='w-e-icon-close w-e-panel-close'></i>");
+        var $closeBtn = $('<i class="w-e-icon-close w-e-panel-close"></i>');
         $container.append($closeBtn);
-        $closeBtn.on("click", function () {
+        $closeBtn.on('click', function () {
             _this.hide();
         });
 
         // 准备 tabs 容器
-        var $tabTitleContainer = $("<ul class='w-e-panel-tab-title'></ul>");
-        var $tabContentContainer = $("<div class='w-e-panel-tab-content'></div>");
+        var $tabTitleContainer = $('<ul class="w-e-panel-tab-title"></ul>');
+        var $tabContentContainer = $('<div class="w-e-panel-tab-content"></div>');
         $container.append($tabTitleContainer).append($tabContentContainer);
 
         // 设置高度
         var height = opt.height;
         if (height) {
-            $tabContentContainer.css("height", height + "px").css("overflow-y", "auto");
+            $tabContentContainer.css('height', height + 'px').css('overflow-y', 'auto');
         }
 
         // tabs
@@ -1202,15 +1202,15 @@ Panel.prototype = {
             if (!tab) {
                 return;
             }
-            var title = tab.title || "";
-            var tpl = tab.tpl || "";
+            var title = tab.title || '';
+            var tpl = tab.tpl || '';
 
             // 替换多语言
             title = replaceLang(editor, title);
             tpl = replaceLang(editor, tpl);
 
             // 添加到 DOM
-            var $title = $("<li class='w-e-item'>" + title + "</li>");
+            var $title = $('<li class="w-e-item">' + title + '</li>');
             $tabTitleContainer.append($title);
             var $content = $(tpl);
             $tabContentContainer.append($content);
@@ -1223,20 +1223,20 @@ Panel.prototype = {
             // 设置 active 项
             if (tabIndex === 0) {
                 $title._active = true;
-                $title.addClass("w-e-active");
+                $title.addClass('w-e-active');
             } else {
                 $content.hide();
             }
 
             // 绑定 tab 的事件
-            $title.on("click", function (e) {
+            $title.on('click', function (e) {
                 if ($title._active) {
                     return;
                 }
                 // 隐藏所有的 tab
                 tabTitleArr.forEach(function ($title) {
                     $title._active = false;
-                    $title.removeClass("w-e-active");
+                    $title.removeClass('w-e-active');
                 });
                 tabContentArr.forEach(function ($content) {
                     $content.hide();
@@ -1244,17 +1244,17 @@ Panel.prototype = {
 
                 // 显示当前的 tab
                 $title._active = true;
-                $title.addClass("w-e-active");
+                $title.addClass('w-e-active');
                 $content.show();
             });
         });
 
         // 绑定关闭事件
-        $container.on("click", function (e) {
+        $container.on('click', function (e) {
             // 点击时阻止冒泡
             e.stopPropagation();
         });
-        $body.on("click", function (e) {
+        $body.on('click', function (e) {
             _this.hide();
         });
 
@@ -1284,7 +1284,7 @@ Panel.prototype = {
         });
 
         // focus 第一个 elem
-        var $inputs = $container.find("input[type=text],textarea");
+        var $inputs = $container.find('input[type=text],textarea');
         if ($inputs.length) {
             $inputs.get(0).focus();
         }
@@ -1336,8 +1336,8 @@ Panel.prototype = {
 // 构造函数
 function Link(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-link'></i></div>");
-    this.type = "panel";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-link"></i></div>');
+    this.type = 'panel';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1362,15 +1362,15 @@ Link.prototype = {
             editor.selection.createRangeByElem($linkelem);
             editor.selection.restoreSelection();
             // 显示 panel
-            this._createPanel($linkelem.text(), $linkelem.attr("href"));
+            this._createPanel($linkelem.text(), $linkelem.attr('href'));
         } else {
             // 当前选区不在链接里面
             if (editor.selection.isSelectionEmpty()) {
                 // 选区是空的，未选中内容
-                this._createPanel("", "");
+                this._createPanel('', '');
             } else {
                 // 选中内容了
-                this._createPanel(editor.selection.getSelectionText(), "");
+                this._createPanel(editor.selection.getSelectionText(), '');
             }
         }
     },
@@ -1380,13 +1380,13 @@ Link.prototype = {
         var _this = this;
 
         // panel 中需要用到的id
-        var inputLinkId = getRandom("input-link");
-        var inputTextId = getRandom("input-text");
-        var btnOkId = getRandom("btn-ok");
-        var btnDelId = getRandom("btn-del");
+        var inputLinkId = getRandom('input-link');
+        var inputTextId = getRandom('input-text');
+        var btnOkId = getRandom('btn-ok');
+        var btnDelId = getRandom('btn-del');
 
         // 是否显示“删除链接”
-        var delBtnDisplay = this._active ? "inline-block" : "none";
+        var delBtnDisplay = this._active ? 'inline-block' : 'none';
 
         // 初始化并显示 panel
         var panel = new Panel(this, {
@@ -1394,19 +1394,19 @@ Link.prototype = {
             // panel 中可包含多个 tab
             tabs: [{
                 // tab 的标题
-                title: "链接",
+                title: '链接',
                 // 模板
-                tpl: "<div>\n                            <input id='" + inputTextId + "' type='text' class='block' value='" + text + "' placeholder='\u94FE\u63A5\u6587\u5B57'/></td>\n                            <input id='" + inputLinkId + "' type='text' class='block' value='" + link + "' placeholder='http://...'/></td>\n                            <div class='w-e-button-container'>\n                                <button id='" + btnOkId + "' class='right'>\u63D2\u5165</button>\n                                <button id='" + btnDelId + "' class='gray right' style='display:" + delBtnDisplay + "'>\u5220\u9664\u94FE\u63A5</button>\n                            </div>\n                        </div>",
+                tpl: '<div>\n                            <input id="' + inputTextId + '" type="text" class="block" value="' + text + '" placeholder="\u94FE\u63A5\u6587\u5B57"/></td>\n                            <input id="' + inputLinkId + '" type="text" class="block" value="' + link + '" placeholder="http://..."/></td>\n                            <div class="w-e-button-container">\n                                <button id="' + btnOkId + '" class="right">\u63D2\u5165</button>\n                                <button id="' + btnDelId + '" class="gray right" style="display:' + delBtnDisplay + '">\u5220\u9664\u94FE\u63A5</button>\n                            </div>\n                        </div>',
                 // 事件绑定
                 events: [
                 // 插入链接
                 {
-                    selector: "#" + btnOkId,
-                    type: "click",
+                    selector: '#' + btnOkId,
+                    type: 'click',
                     fn: function fn() {
                         // 执行插入链接
-                        var $link = $("#" + inputLinkId);
-                        var $text = $("#" + inputTextId);
+                        var $link = $('#' + inputLinkId);
+                        var $text = $('#' + inputTextId);
                         var link = $link.val();
                         var text = $text.val();
                         _this._insertLink(text, link);
@@ -1417,8 +1417,8 @@ Link.prototype = {
                 },
                 // 删除链接
                 {
-                    selector: "#" + btnDelId,
-                    type: "click",
+                    selector: '#' + btnDelId,
+                    type: 'click',
                     fn: function fn() {
                         // 执行删除链接
                         _this._delLink();
@@ -1449,7 +1449,7 @@ Link.prototype = {
             return;
         }
         var selectionText = editor.selection.getSelectionText();
-        editor.cmd.do("insertHTML", "<span>" + selectionText + "</span>");
+        editor.cmd.do('insertHTML', '<span>' + selectionText + '</span>');
     },
 
     // 插入链接
@@ -1458,11 +1458,11 @@ Link.prototype = {
         var config = editor.config;
         var linkCheck = config.linkCheck;
         var checkResult = true; // 默认为 true
-        if (linkCheck && typeof linkCheck === "function") {
+        if (linkCheck && typeof linkCheck === 'function') {
             checkResult = linkCheck(text, link);
         }
         if (checkResult === true) {
-            editor.cmd.do("insertHTML", "<a href='" + link + "' target='_blank'>" + text + "</a>");
+            editor.cmd.do('insertHTML', '<a href="' + link + '" target="_blank">' + text + '</a>');
         } else {
             alert(checkResult);
         }
@@ -1476,12 +1476,12 @@ Link.prototype = {
         if (!$selectionELem) {
             return;
         }
-        if ($selectionELem.getNodeName() === "A") {
+        if ($selectionELem.getNodeName() === 'A') {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -1492,8 +1492,8 @@ Link.prototype = {
 // 构造函数
 function Italic(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-italic'></i>\n        </div>");
-    this.type = "click";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-italic"></i>\n        </div>');
+    this.type = 'click';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1516,7 +1516,7 @@ Italic.prototype = {
         }
 
         // 执行 italic 命令
-        editor.cmd.do("italic");
+        editor.cmd.do('italic');
 
         if (isSeleEmpty) {
             // 需要将选取折叠起来
@@ -1529,12 +1529,12 @@ Italic.prototype = {
     tryChangeActive: function tryChangeActive(e) {
         var editor = this.editor;
         var $elem = this.$elem;
-        if (editor.cmd.queryCommandState("italic")) {
+        if (editor.cmd.queryCommandState('italic')) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -1545,8 +1545,8 @@ Italic.prototype = {
 // 构造函数
 function Redo(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-redo'></i>\n        </div>");
-    this.type = "click";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-redo"></i>\n        </div>');
+    this.type = 'click';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1563,7 +1563,7 @@ Redo.prototype = {
         var editor = this.editor;
 
         // 执行 redo 命令
-        editor.cmd.do("redo");
+        editor.cmd.do('redo');
     }
 };
 
@@ -1573,8 +1573,8 @@ Redo.prototype = {
 // 构造函数
 function StrikeThrough(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-strikethrough'></i>\n        </div>");
-    this.type = "click";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-strikethrough"></i>\n        </div>');
+    this.type = 'click';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1597,7 +1597,7 @@ StrikeThrough.prototype = {
         }
 
         // 执行 strikeThrough 命令
-        editor.cmd.do("strikeThrough");
+        editor.cmd.do('strikeThrough');
 
         if (isSeleEmpty) {
             // 需要将选取折叠起来
@@ -1610,12 +1610,12 @@ StrikeThrough.prototype = {
     tryChangeActive: function tryChangeActive(e) {
         var editor = this.editor;
         var $elem = this.$elem;
-        if (editor.cmd.queryCommandState("strikeThrough")) {
+        if (editor.cmd.queryCommandState('strikeThrough')) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -1626,8 +1626,8 @@ StrikeThrough.prototype = {
 // 构造函数
 function Underline(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-underline'></i>\n        </div>");
-    this.type = "click";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-underline"></i>\n        </div>');
+    this.type = 'click';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1650,7 +1650,7 @@ Underline.prototype = {
         }
 
         // 执行 underline 命令
-        editor.cmd.do("underline");
+        editor.cmd.do('underline');
 
         if (isSeleEmpty) {
             // 需要将选取折叠起来
@@ -1663,12 +1663,12 @@ Underline.prototype = {
     tryChangeActive: function tryChangeActive(e) {
         var editor = this.editor;
         var $elem = this.$elem;
-        if (editor.cmd.queryCommandState("underline")) {
+        if (editor.cmd.queryCommandState('underline')) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -1679,8 +1679,8 @@ Underline.prototype = {
 // 构造函数
 function Undo(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-undo'></i>\n        </div>");
-    this.type = "click";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-undo"></i>\n        </div>');
+    this.type = 'click';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1697,7 +1697,7 @@ Undo.prototype = {
         var editor = this.editor;
 
         // 执行 undo 命令
-        editor.cmd.do("undo");
+        editor.cmd.do('undo');
     }
 };
 
@@ -1709,8 +1709,8 @@ function List(editor) {
     var _this = this;
 
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-list2'></i></div>");
-    this.type = "droplist";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-list2"></i></div>');
+    this.type = 'droplist';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1718,9 +1718,9 @@ function List(editor) {
     // 初始化 droplist
     this.droplist = new DropList(this, {
         width: 120,
-        $title: $("<p>设置列表</p>"),
-        type: "list", // droplist 以列表形式展示
-        list: [{ $elem: $("<span><i class='w-e-icon-list-numbered'></i> 有序列表</span>"), value: "insertOrderedList" }, { $elem: $("<span><i class='w-e-icon-list2'></i> 无序列表</span>"), value: "insertUnorderedList" }],
+        $title: $('<p>设置列表</p>'),
+        type: 'list', // droplist 以列表形式展示
+        list: [{ $elem: $('<span><i class="w-e-icon-list-numbered"></i> 有序列表</span>'), value: 'insertOrderedList' }, { $elem: $('<span><i class="w-e-icon-list2"></i> 无序列表</span>'), value: 'insertUnorderedList' }],
         onClick: function onClick(value) {
             // 注意 this 是指向当前的 List 对象
             _this._command(value);
@@ -1744,7 +1744,7 @@ List.prototype = {
 
         // 验证列表是否被包裹在 <p> 之内
         var $selectionElem = editor.selection.getSelectionContainerElem();
-        if ($selectionElem.getNodeName() === "LI") {
+        if ($selectionElem.getNodeName() === 'LI') {
             $selectionElem = $selectionElem.parent();
         }
         if (/^ol|ul$/i.test($selectionElem.getNodeName()) === false) {
@@ -1768,12 +1768,12 @@ List.prototype = {
     tryChangeActive: function tryChangeActive(e) {
         var editor = this.editor;
         var $elem = this.$elem;
-        if (editor.cmd.queryCommandState("insertUnOrderedList") || editor.cmd.queryCommandState("insertOrderedList")) {
+        if (editor.cmd.queryCommandState('insertUnOrderedList') || editor.cmd.queryCommandState('insertOrderedList')) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -1786,8 +1786,8 @@ function Justify(editor) {
     var _this = this;
 
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-paragraph-left'></i></div>");
-    this.type = "droplist";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-paragraph-left"></i></div>');
+    this.type = 'droplist';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1795,9 +1795,9 @@ function Justify(editor) {
     // 初始化 droplist
     this.droplist = new DropList(this, {
         width: 100,
-        $title: $("<p>对齐方式</p>"),
-        type: "list", // droplist 以列表形式展示
-        list: [{ $elem: $("<span><i class='w-e-icon-paragraph-left'></i> 靠左</span>"), value: "justifyLeft" }, { $elem: $("<span><i class='w-e-icon-paragraph-center'></i> 居中</span>"), value: "justifyCenter" }, { $elem: $("<span><i class='w-e-icon-paragraph-right'></i> 靠右</span>"), value: "justifyRight" }],
+        $title: $('<p>对齐方式</p>'),
+        type: 'list', // droplist 以列表形式展示
+        list: [{ $elem: $('<span><i class="w-e-icon-paragraph-left"></i> 靠左</span>'), value: 'justifyLeft' }, { $elem: $('<span><i class="w-e-icon-paragraph-center"></i> 居中</span>'), value: 'justifyCenter' }, { $elem: $('<span><i class="w-e-icon-paragraph-right"></i> 靠右</span>'), value: 'justifyRight' }],
         onClick: function onClick(value) {
             // 注意 this 是指向当前的 List 对象
             _this._command(value);
@@ -1824,8 +1824,8 @@ function ForeColor(editor) {
     var _this = this;
 
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-pencil2'></i></div>");
-    this.type = "droplist";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-pencil2"></i></div>');
+    this.type = 'droplist';
 
     // 获取配置的颜色
     var config = editor.config;
@@ -1837,10 +1837,10 @@ function ForeColor(editor) {
     // 初始化 droplist
     this.droplist = new DropList(this, {
         width: 120,
-        $title: $("<p>文字颜色</p>"),
-        type: "inline-block", // droplist 内容以 block 形式展示
+        $title: $('<p>文字颜色</p>'),
+        type: 'inline-block', // droplist 内容以 block 形式展示
         list: colors.map(function (color) {
-            return { $elem: $("<i style='color:" + color + ";' class='w-e-icon-pencil2'></i>"), value: color };
+            return { $elem: $('<i style="color:' + color + ';" class="w-e-icon-pencil2"></i>'), value: color };
         }),
         onClick: function onClick(value) {
             // 注意 this 是指向当前的 ForeColor 对象
@@ -1856,7 +1856,7 @@ ForeColor.prototype = {
     // 执行命令
     _command: function _command(value) {
         var editor = this.editor;
-        editor.cmd.do("foreColor", value);
+        editor.cmd.do('foreColor', value);
     }
 };
 
@@ -1868,8 +1868,8 @@ function BackColor(editor) {
     var _this = this;
 
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-paint-brush'></i></div>");
-    this.type = "droplist";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-paint-brush"></i></div>');
+    this.type = 'droplist';
 
     // 获取配置的颜色
     var config = editor.config;
@@ -1881,10 +1881,10 @@ function BackColor(editor) {
     // 初始化 droplist
     this.droplist = new DropList(this, {
         width: 120,
-        $title: $("<p>背景色</p>"),
-        type: "inline-block", // droplist 内容以 block 形式展示
+        $title: $('<p>背景色</p>'),
+        type: 'inline-block', // droplist 内容以 block 形式展示
         list: colors.map(function (color) {
-            return { $elem: $("<i style='color:" + color + ";' class='w-e-icon-paint-brush'></i>"), value: color };
+            return { $elem: $('<i style="color:' + color + ';" class="w-e-icon-paint-brush"></i>'), value: color };
         }),
         onClick: function onClick(value) {
             // 注意 this 是指向当前的 BackColor 对象
@@ -1900,7 +1900,7 @@ BackColor.prototype = {
     // 执行命令
     _command: function _command(value) {
         var editor = this.editor;
-        editor.cmd.do("backColor", value);
+        editor.cmd.do('backColor', value);
     }
 };
 
@@ -1910,8 +1910,8 @@ BackColor.prototype = {
 // 构造函数
 function Quote(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-quotes-left'></i>\n        </div>");
-    this.type = "click";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-quotes-left"></i>\n        </div>');
+    this.type = 'click';
 
     // 当前是否 active 状态
     this._active = false;
@@ -1927,12 +1927,12 @@ Quote.prototype = {
         var nodeName = $selectionElem.getNodeName();
 
         if (!UA.isIE()) {
-            if (nodeName === "BLOCKQUOTE") {
+            if (nodeName === 'BLOCKQUOTE') {
                 // 撤销 quote
-                editor.cmd.do("formatBlock", "<P>");
+                editor.cmd.do('formatBlock', '<P>');
             } else {
                 // 转换为 quote
-                editor.cmd.do("formatBlock", "<BLOCKQUOTE>");
+                editor.cmd.do('formatBlock', '<BLOCKQUOTE>');
             }
             return;
         }
@@ -1940,18 +1940,18 @@ Quote.prototype = {
         // IE 中不支持 formatBlock <BLOCKQUOTE> ，要用其他方式兼容
         var content = void 0,
             $targetELem = void 0;
-        if (nodeName === "P") {
+        if (nodeName === 'P') {
             // 将 P 转换为 quote
             content = $selectionElem.text();
-            $targetELem = $("<blockquote>" + content + "</blockquote>");
+            $targetELem = $('<blockquote>' + content + '</blockquote>');
             $targetELem.insertAfter($selectionElem);
             $selectionElem.remove();
             return;
         }
-        if (nodeName === "BLOCKQUOTE") {
+        if (nodeName === 'BLOCKQUOTE') {
             // 撤销 quote
             content = $selectionElem.text();
-            $targetELem = $("<p>" + content + "</p>");
+            $targetELem = $('<p>' + content + '</p>');
             $targetELem.insertAfter($selectionElem);
             $selectionElem.remove();
         }
@@ -1961,13 +1961,13 @@ Quote.prototype = {
         var editor = this.editor;
         var $elem = this.$elem;
         var reg = /^BLOCKQUOTE$/i;
-        var cmdValue = editor.cmd.queryCommandValue("formatBlock");
+        var cmdValue = editor.cmd.queryCommandValue('formatBlock');
         if (reg.test(cmdValue)) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -1978,8 +1978,8 @@ Quote.prototype = {
 // 构造函数
 function Code(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-terminal'></i>\n        </div>");
-    this.type = "panel";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-terminal"></i>\n        </div>');
+    this.type = 'panel';
 
     // 当前是否 active 状态
     this._active = false;
@@ -2004,8 +2004,8 @@ Code.prototype = {
         }
         if (!isSeleEmpty) {
             // 选取不是空，用 <code> 包裹即可
-            $code = $("<code>" + selectionText + "</code>");
-            editor.cmd.do("insertElem", $code);
+            $code = $('<code>' + selectionText + '</code>');
+            editor.cmd.do('insertElem', $code);
             editor.selection.createRangeByElem($code, false);
             editor.selection.restoreSelection();
             return;
@@ -2025,30 +2025,30 @@ Code.prototype = {
         var _this = this;
 
         // value - 要编辑的内容
-        value = value || "";
-        var type = !value ? "new" : "edit";
-        var textId = getRandom("texxt");
-        var btnId = getRandom("btn");
+        value = value || '';
+        var type = !value ? 'new' : 'edit';
+        var textId = getRandom('texxt');
+        var btnId = getRandom('btn');
 
         var panel = new Panel(this, {
             width: 500,
             // 一个 Panel 包含多个 tab
             tabs: [{
                 // 标题
-                title: "插入代码",
+                title: '插入代码',
                 // 模板
-                tpl: "<div>\n                        <textarea id='" + textId + "' style='height:145px;;'>" + value + "</textarea>\n                        <div class='w-e-button-container'>\n                            <button id='" + btnId + "' class='right'>\u63D2\u5165</button>\n                        </div>\n                    <div>",
+                tpl: '<div>\n                        <textarea id="' + textId + '" style="height:145px;;">' + value + '</textarea>\n                        <div class="w-e-button-container">\n                            <button id="' + btnId + '" class="right">\u63D2\u5165</button>\n                        </div>\n                    <div>',
                 // 事件绑定
                 events: [
                 // 插入代码
                 {
-                    selector: "#" + btnId,
-                    type: "click",
+                    selector: '#' + btnId,
+                    type: 'click',
                     fn: function fn() {
-                        var $text = $("#" + textId);
+                        var $text = $('#' + textId);
                         var text = $text.val() || $text.html();
                         text = replaceHtmlSymbol(text);
-                        if (type === "new") {
+                        if (type === 'new') {
                             // 新插入
                             _this._insertCode(text);
                         } else {
@@ -2074,7 +2074,7 @@ Code.prototype = {
     // 插入代码
     _insertCode: function _insertCode(value) {
         var editor = this.editor;
-        editor.cmd.do("insertHTML", "<pre><code>" + value + "</code></pre><p><br/></p>");
+        editor.cmd.do('insertHTML', '<pre><code>' + value + '</code></pre><p><br/></p>');
     },
 
     // 更新代码
@@ -2097,12 +2097,12 @@ Code.prototype = {
             return;
         }
         var $parentElem = $selectionELem.parent();
-        if ($selectionELem.getNodeName() === "CODE" && $parentElem.getNodeName() === "PRE") {
+        if ($selectionELem.getNodeName() === 'CODE' && $parentElem.getNodeName() === 'PRE') {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -2113,8 +2113,8 @@ Code.prototype = {
 // 构造函数
 function Emoticon(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'>\n            <i class='w-e-icon-happy'></i>\n        </div>");
-    this.type = "panel";
+    this.$elem = $('<div class="w-e-menu">\n            <i class="w-e-icon-happy"></i>\n        </div>');
+    this.type = 'panel';
 
     // 当前是否 active 状态
     this._active = false;
@@ -2143,46 +2143,46 @@ Emoticon.prototype = {
             var content = emotData.content || [];
 
             // 这一组表情最终拼接出来的 html
-            var faceHtml = "";
+            var faceHtml = '';
 
             // emoji 表情
-            if (emotType === "emoji") {
+            if (emotType === 'emoji') {
                 content.forEach(function (item) {
                     if (item) {
-                        faceHtml += "<span class='w-e-item'>" + item + "</span>";
+                        faceHtml += '<span class="w-e-item">' + item + '</span>';
                     }
                 });
             }
             // 图片表情
-            if (emotType === "image") {
+            if (emotType === 'image') {
                 content.forEach(function (item) {
                     var src = item.src;
                     var alt = item.alt;
                     if (src) {
                         // 加一个 data-w-e 属性，点击图片的时候不再提示编辑图片
-                        faceHtml += "<span class='w-e-item'><img src='" + src + "' alt='" + alt + "' data-w-e='1'/></span>";
+                        faceHtml += '<span class="w-e-item"><img src="' + src + '" alt="' + alt + '" data-w-e="1"/></span>';
                     }
                 });
             }
 
             tabConfig.push({
                 title: emotData.title,
-                tpl: "<div class='w-e-emoticon-container'>" + faceHtml + "</div>",
+                tpl: '<div class="w-e-emoticon-container">' + faceHtml + '</div>',
                 events: [{
-                    selector: "span.w-e-item",
-                    type: "click",
+                    selector: 'span.w-e-item',
+                    type: 'click',
                     fn: function fn(e) {
                         var target = e.target;
                         var $target = $(target);
                         var nodeName = $target.getNodeName();
 
                         var insertHtml = void 0;
-                        if (nodeName === "IMG") {
+                        if (nodeName === 'IMG') {
                             // 插入图片
                             insertHtml = $target.parent().html();
                         } else {
                             // 插入 emoji
-                            insertHtml = "<span>" + $target.html() + "</span>";
+                            insertHtml = '<span>' + $target.html() + '</span>';
                         }
 
                         _this._insert(insertHtml);
@@ -2210,7 +2210,7 @@ Emoticon.prototype = {
     // 插入表情
     _insert: function _insert(emotHtml) {
         var editor = this.editor;
-        editor.cmd.do("insertHTML", emotHtml);
+        editor.cmd.do('insertHTML', emotHtml);
     }
 };
 
@@ -2220,8 +2220,8 @@ Emoticon.prototype = {
 // 构造函数
 function Table(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-table2'></i></div>");
-    this.type = "panel";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-table2"></i></div>');
+    this.type = 'panel';
 
     // 当前是否 active 状态
     this._active = false;
@@ -2246,26 +2246,26 @@ Table.prototype = {
         var _this = this;
 
         // 用到的 id
-        var btnInsertId = getRandom("btn");
-        var textRowNum = getRandom("row");
-        var textColNum = getRandom("col");
+        var btnInsertId = getRandom('btn');
+        var textRowNum = getRandom('row');
+        var textColNum = getRandom('col');
 
         var panel = new Panel(this, {
             width: 250,
             // panel 包含多个 tab
             tabs: [{
                 // 标题
-                title: "插入表格",
+                title: '插入表格',
                 // 模板
-                tpl: "<div>\n                        <p style='text-align:left; padding:5px 0;'>\n                            \u521B\u5EFA\n                            <input id='" + textRowNum + "' type='text' value='5' style='width:40px;text-align:center;'/>\n                            \u884C\n                            <input id='" + textColNum + "' type='text' value='5' style='width:40px;text-align:center;'/>\n                            \u5217\u7684\u8868\u683C\n                        </p>\n                        <div class='w-e-button-container'>\n                            <button id='" + btnInsertId + "' class='right'>\u63D2\u5165</button>\n                        </div>\n                    </div>",
+                tpl: '<div>\n                        <p style="text-align:left; padding:5px 0;">\n                            \u521B\u5EFA\n                            <input id="' + textRowNum + '" type="text" value="5" style="width:40px;text-align:center;"/>\n                            \u884C\n                            <input id="' + textColNum + '" type="text" value="5" style="width:40px;text-align:center;"/>\n                            \u5217\u7684\u8868\u683C\n                        </p>\n                        <div class="w-e-button-container">\n                            <button id="' + btnInsertId + '" class="right">\u63D2\u5165</button>\n                        </div>\n                    </div>',
                 // 事件绑定
                 events: [{
                     // 点击按钮，插入表格
-                    selector: "#" + btnInsertId,
-                    type: "click",
+                    selector: '#' + btnInsertId,
+                    type: 'click',
                     fn: function fn() {
-                        var rowNum = parseInt($("#" + textRowNum).val());
-                        var colNum = parseInt($("#" + textColNum).val());
+                        var rowNum = parseInt($('#' + textRowNum).val());
+                        var colNum = parseInt($('#' + textColNum).val());
 
                         if (rowNum && colNum && rowNum > 0 && colNum > 0) {
                             // form 数据有效
@@ -2292,29 +2292,29 @@ Table.prototype = {
         // 拼接 table 模板
         var r = void 0,
             c = void 0;
-        var html = "<table border='0' width='100%' cellpadding='0' cellspacing='0'>";
+        var html = '<table border="0" width="100%" cellpadding="0" cellspacing="0">';
         for (r = 0; r < rowNum; r++) {
-            html += "<tr>";
+            html += '<tr>';
             if (r === 0) {
                 for (c = 0; c < colNum; c++) {
-                    html += "<th>&nbsp;</th>";
+                    html += '<th>&nbsp;</th>';
                 }
             } else {
                 for (c = 0; c < colNum; c++) {
-                    html += "<td>&nbsp;</td>";
+                    html += '<td>&nbsp;</td>';
                 }
             }
-            html += "</tr>";
+            html += '</tr>';
         }
-        html += "</table><p><br/></p>";
+        html += '</table><p><br/></p>';
 
         // 执行命令
         var editor = this.editor;
-        editor.cmd.do("insertHTML", html);
+        editor.cmd.do('insertHTML', html);
 
         // 防止 firefox 下出现 resize 的控制点
-        editor.cmd.do("enableObjectResizing", false);
-        editor.cmd.do("enableInlineTableEditing", false);
+        editor.cmd.do('enableObjectResizing', false);
+        editor.cmd.do('enableInlineTableEditing', false);
     },
 
     // 创建编辑表格的 panel
@@ -2322,11 +2322,11 @@ Table.prototype = {
         var _this2 = this;
 
         // 可用的 id
-        var addRowBtnId = getRandom("add-row");
-        var addColBtnId = getRandom("add-col");
-        var delRowBtnId = getRandom("del-row");
-        var delColBtnId = getRandom("del-col");
-        var delTableBtnId = getRandom("del-table");
+        var addRowBtnId = getRandom('add-row');
+        var addColBtnId = getRandom('add-col');
+        var delRowBtnId = getRandom('del-row');
+        var delColBtnId = getRandom('del-col');
+        var delTableBtnId = getRandom('del-table');
 
         // 创建 panel 对象
         var panel = new Panel(this, {
@@ -2334,14 +2334,14 @@ Table.prototype = {
             // panel 包含多个 tab
             tabs: [{
                 // 标题
-                title: "编辑表格",
+                title: '编辑表格',
                 // 模板
-                tpl: "<div>\n                        <div class='w-e-button-container' style='border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;'>\n                            <button id='" + addRowBtnId + "' class='left'>\u589E\u52A0\u884C</button>\n                            <button id='" + delRowBtnId + "' class='red left'>\u5220\u9664\u884C</button>\n                            <button id='" + addColBtnId + "' class='left'>\u589E\u52A0\u5217</button>\n                            <button id='" + delColBtnId + "' class='red left'>\u5220\u9664\u5217</button>\n                        </div>\n                        <div class='w-e-button-container'>\n                            <button id='" + delTableBtnId + "' class='gray left'>\u5220\u9664\u8868\u683C</button>\n                        </dv>\n                    </div>",
+                tpl: '<div>\n                        <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">\n                            <button id="' + addRowBtnId + '" class="left">\u589E\u52A0\u884C</button>\n                            <button id="' + delRowBtnId + '" class="red left">\u5220\u9664\u884C</button>\n                            <button id="' + addColBtnId + '" class="left">\u589E\u52A0\u5217</button>\n                            <button id="' + delColBtnId + '" class="red left">\u5220\u9664\u5217</button>\n                        </div>\n                        <div class="w-e-button-container">\n                            <button id="' + delTableBtnId + '" class="gray left">\u5220\u9664\u8868\u683C</button>\n                        </dv>\n                    </div>',
                 // 事件绑定
                 events: [{
                     // 增加行
-                    selector: "#" + addRowBtnId,
-                    type: "click",
+                    selector: '#' + addRowBtnId,
+                    type: 'click',
                     fn: function fn() {
                         _this2._addRow();
                         // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
@@ -2349,8 +2349,8 @@ Table.prototype = {
                     }
                 }, {
                     // 增加列
-                    selector: "#" + addColBtnId,
-                    type: "click",
+                    selector: '#' + addColBtnId,
+                    type: 'click',
                     fn: function fn() {
                         _this2._addCol();
                         // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
@@ -2358,8 +2358,8 @@ Table.prototype = {
                     }
                 }, {
                     // 删除行
-                    selector: "#" + delRowBtnId,
-                    type: "click",
+                    selector: '#' + delRowBtnId,
+                    type: 'click',
                     fn: function fn() {
                         _this2._delRow();
                         // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
@@ -2367,8 +2367,8 @@ Table.prototype = {
                     }
                 }, {
                     // 删除列
-                    selector: "#" + delColBtnId,
-                    type: "click",
+                    selector: '#' + delColBtnId,
+                    type: 'click',
                     fn: function fn() {
                         _this2._delCol();
                         // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
@@ -2376,8 +2376,8 @@ Table.prototype = {
                     }
                 }, {
                     // 删除表格
-                    selector: "#" + delTableBtnId,
-                    type: "click",
+                    selector: '#' + delTableBtnId,
+                    type: 'click',
                     fn: function fn() {
                         _this2._delTable();
                         // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
@@ -2399,7 +2399,7 @@ Table.prototype = {
             return;
         }
         var nodeName = $selectionELem.getNodeName();
-        if (nodeName !== "TD" && nodeName !== "TH") {
+        if (nodeName !== 'TD' && nodeName !== 'TH') {
             return;
         }
 
@@ -2452,11 +2452,11 @@ Table.prototype = {
         var tdLength = tdData.length;
 
         // 拼接即将插入的字符串
-        var newTr = document.createElement("tr");
-        var tpl = "",
+        var newTr = document.createElement('tr');
+        var tpl = '',
             i = void 0;
         for (i = 0; i < tdLength; i++) {
-            tpl += "<td>&nbsp;</td>";
+            tpl += '<td>&nbsp;</td>';
         }
         newTr.innerHTML = tpl;
         // 插入
@@ -2533,7 +2533,7 @@ Table.prototype = {
         if (!$selectionELem) {
             return;
         }
-        var $table = $selectionELem.parentUntil("table");
+        var $table = $selectionELem.parentUntil('table');
         if (!$table) {
             return;
         }
@@ -2549,12 +2549,12 @@ Table.prototype = {
             return;
         }
         var nodeName = $selectionELem.getNodeName();
-        if (nodeName === "TD" || nodeName === "TH") {
+        if (nodeName === 'TD' || nodeName === 'TH') {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -2565,8 +2565,8 @@ Table.prototype = {
 // 构造函数
 function Video(editor) {
     this.editor = editor;
-    this.$elem = $("<div class='w-e-menu'><i class='w-e-icon-play'></i></div>");
-    this.type = "panel";
+    this.$elem = $('<div class="w-e-menu"><i class="w-e-icon-play"></i></div>');
+    this.type = 'panel';
 
     // 当前是否 active 状态
     this._active = false;
@@ -2584,8 +2584,8 @@ Video.prototype = {
         var _this = this;
 
         // 创建 id
-        var textValId = getRandom("text-val");
-        var btnId = getRandom("btn");
+        var textValId = getRandom('text-val');
+        var btnId = getRandom('btn');
 
         // 创建 panel
         var panel = new Panel(this, {
@@ -2593,19 +2593,19 @@ Video.prototype = {
             // 一个 panel 多个 tab
             tabs: [{
                 // 标题
-                title: "插入视频",
+                title: '插入视频',
                 // 模板
-                tpl: "<div>\n                        <input id='" + textValId + "' type='text' class='block' placeholder='\u683C\u5F0F\u5982\uFF1A<iframe src=... ></iframe>'/>\n                        <div class='w-e-button-container'>\n                            <button id='" + btnId + "' class='right'>\u63D2\u5165</button>\n                        </div>\n                    </div>",
+                tpl: '<div>\n                        <input id="' + textValId + '" type="text" class="block" placeholder="\u683C\u5F0F\u5982\uFF1A<iframe src=... ></iframe>"/>\n                        <div class="w-e-button-container">\n                            <button id="' + btnId + '" class="right">\u63D2\u5165</button>\n                        </div>\n                    </div>',
                 // 事件绑定
                 events: [{
-                    selector: "#" + btnId,
-                    type: "click",
+                    selector: '#' + btnId,
+                    type: 'click',
                     fn: function fn() {
-                        var $text = $("#" + textValId);
+                        var $text = $('#' + textValId);
                         var val = $text.val().trim();
 
                         // 测试用视频地址
-                        // <iframe height=498 width=510 src="http://player.youku.com/embed/XMjcwMzc3MzM3Mg==" frameborder=0 "allowfullscreen"></iframe>
+                        // <iframe height=498 width=510 src='http://player.youku.com/embed/XMjcwMzc3MzM3Mg==' frameborder=0 'allowfullscreen'></iframe>
 
                         if (val) {
                             // 插入视频
@@ -2630,7 +2630,7 @@ Video.prototype = {
     // 插入视频
     _insert: function _insert(val) {
         var editor = this.editor;
-        editor.cmd.do("insertHTML", val + "<p><br/></p>");
+        editor.cmd.do('insertHTML', val + '<p><br/></p>');
     }
 };
 
@@ -2640,10 +2640,10 @@ Video.prototype = {
 // 构造函数
 function Image(editor) {
     this.editor = editor;
-    var imgMenuId = getRandom("w-e-img");
-    this.$elem = $("<div class='w-e-menu' id='" + imgMenuId + "'><i class='w-e-icon-image'></i></div>");
+    var imgMenuId = getRandom('w-e-img');
+    this.$elem = $('<div class="w-e-menu" id="' + imgMenuId + '"><i class="w-e-icon-image"></i></div>');
     editor.imgMenuId = imgMenuId;
-    this.type = "panel";
+    this.type = 'panel';
 
     // 当前是否 active 状态
     this._active = false;
@@ -2670,51 +2670,51 @@ Image.prototype = {
         var editor = this.editor;
 
         // id
-        var width30 = getRandom("width-30");
-        var width50 = getRandom("width-50");
-        var width100 = getRandom("width-100");
-        var delBtn = getRandom("del-btn");
+        var width30 = getRandom('width-30');
+        var width50 = getRandom('width-50');
+        var width100 = getRandom('width-100');
+        var delBtn = getRandom('del-btn');
 
         // tab 配置
         var tabsConfig = [{
-            title: "编辑图片",
-            tpl: "<div>\n                    <div class='w-e-button-container' style='border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;'>\n                        <span style='float:left;font-size:14px;margin:4px 5px 0 5px;color:#333;'>\u6700\u5927\u5BBD\u5EA6\uFF1A</span>\n                        <button id='" + width30 + "' class='left'>30%</button>\n                        <button id='" + width50 + "' class='left'>50%</button>\n                        <button id='" + width100 + "' class='left'>100%</button>\n                    </div>\n                    <div class='w-e-button-container'>\n                        <button id='" + delBtn + "' class='gray left'>\u5220\u9664\u56FE\u7247</button>\n                    </dv>\n                </div>",
+            title: '编辑图片',
+            tpl: '<div>\n                    <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">\n                        <span style="float:left;font-size:14px;margin:4px 5px 0 5px;color:#333;">\u6700\u5927\u5BBD\u5EA6\uFF1A</span>\n                        <button id="' + width30 + '" class="left">30%</button>\n                        <button id="' + width50 + '" class="left">50%</button>\n                        <button id="' + width100 + '" class="left">100%</button>\n                    </div>\n                    <div class="w-e-button-container">\n                        <button id="' + delBtn + '" class="gray left">\u5220\u9664\u56FE\u7247</button>\n                    </dv>\n                </div>',
             events: [{
-                selector: "#" + width30,
-                type: "click",
+                selector: '#' + width30,
+                type: 'click',
                 fn: function fn() {
                     var $img = editor._selectedImg;
                     if ($img) {
-                        $img.css("max-width", "30%");
+                        $img.css('max-width', '30%');
                     }
                     // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                     return true;
                 }
             }, {
-                selector: "#" + width50,
-                type: "click",
+                selector: '#' + width50,
+                type: 'click',
                 fn: function fn() {
                     var $img = editor._selectedImg;
                     if ($img) {
-                        $img.css("max-width", "50%");
+                        $img.css('max-width', '50%');
                     }
                     // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                     return true;
                 }
             }, {
-                selector: "#" + width100,
-                type: "click",
+                selector: '#' + width100,
+                type: 'click',
                 fn: function fn() {
                     var $img = editor._selectedImg;
                     if ($img) {
-                        $img.css("max-width", "100%");
+                        $img.css('max-width', '100%');
                     }
                     // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                     return true;
                 }
             }, {
-                selector: "#" + delBtn,
-                type: "click",
+                selector: '#' + delBtn,
+                type: 'click',
                 fn: function fn() {
                     var $img = editor._selectedImg;
                     if ($img) {
@@ -2743,21 +2743,21 @@ Image.prototype = {
         var config = editor.config;
 
         // id
-        var upTriggerId = getRandom("up-trigger");
-        var upFileId = getRandom("up-file");
-        var linkUrlId = getRandom("link-url");
-        var linkBtnId = getRandom("link-btn");
+        var upTriggerId = getRandom('up-trigger');
+        var upFileId = getRandom('up-file');
+        var linkUrlId = getRandom('link-url');
+        var linkBtnId = getRandom('link-btn');
 
         // tabs 的配置
         var tabsConfig = [{
-            title: "上传图片",
-            tpl: "<div class='w-e-up-img-container'>\n                    <div id='" + upTriggerId + "' class='w-e-up-btn'>\n                        <i class='w-e-icon-upload2'></i>\n                    </div>\n                    <div style='display:none;'>\n                        <input id='" + upFileId + "' type='file' multiple='multiple' accept='image/jpg,image/jpeg,image/png,image/gif,image/bmp'/>\n                    </div>\n                </div>",
+            title: '上传图片',
+            tpl: '<div class="w-e-up-img-container">\n                    <div id="' + upTriggerId + '" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="' + upFileId + '" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>\n                    </div>\n                </div>',
             events: [{
                 // 触发选择图片
-                selector: "#" + upTriggerId,
-                type: "click",
+                selector: '#' + upTriggerId,
+                type: 'click',
                 fn: function fn() {
-                    var $file = $("#" + upFileId);
+                    var $file = $('#' + upFileId);
                     var fileElem = $file[0];
                     if (fileElem) {
                         fileElem.click();
@@ -2768,10 +2768,10 @@ Image.prototype = {
                 }
             }, {
                 // 选择图片完毕
-                selector: "#" + upFileId,
-                type: "change",
+                selector: '#' + upFileId,
+                type: 'change',
                 fn: function fn() {
-                    var $file = $("#" + upFileId);
+                    var $file = $('#' + upFileId);
                     var fileElem = $file[0];
                     if (!fileElem) {
                         // 返回 true 可关闭 panel
@@ -2790,13 +2790,13 @@ Image.prototype = {
             }]
         }, // first tab end
         {
-            title: "网络图片",
-            tpl: "<div>\n                    <input id='" + linkUrlId + "' type='text' class='block' placeholder='\u56FE\u7247\u94FE\u63A5'/></td>\n                    <div class='w-e-button-container'>\n                        <button id='" + linkBtnId + "' class='right'>\u63D2\u5165</button>\n                    </div>\n                </div>",
+            title: '网络图片',
+            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
             events: [{
-                selector: "#" + linkBtnId,
-                type: "click",
+                selector: '#' + linkBtnId,
+                type: 'click',
                 fn: function fn() {
-                    var $linkUrl = $("#" + linkUrlId);
+                    var $linkUrl = $('#' + linkUrlId);
                     var url = $linkUrl.val().trim();
 
                     if (url) {
@@ -2838,10 +2838,10 @@ Image.prototype = {
         var $elem = this.$elem;
         if (editor._selectedImg) {
             this._active = true;
-            $elem.addClass("w-e-active");
+            $elem.addClass('w-e-active');
         } else {
             this._active = false;
-            $elem.removeClass("w-e-active");
+            $elem.removeClass('w-e-active');
         }
     }
 };
@@ -2917,7 +2917,7 @@ Menus.prototype = {
         // 根据配置信息，创建菜单
         configMenus.forEach(function (menuKey) {
             var MenuConstructor = MenuConstructors[menuKey];
-            if (MenuConstructor && typeof MenuConstructor === "function") {
+            if (MenuConstructor && typeof MenuConstructor === 'function') {
                 // 创建单个菜单
                 _this.menus[menuKey] = new MenuConstructor(editor);
             }
@@ -2942,7 +2942,7 @@ Menus.prototype = {
             var $elem = menu.$elem;
             if ($elem) {
                 // 设置 z-index
-                $elem.css("z-index", zIndex);
+                $elem.css('z-index', zIndex);
                 $toolbarElem.append($elem);
             }
         });
@@ -2962,8 +2962,8 @@ Menus.prototype = {
             var panel = menu.panel;
 
             // 点击类型，例如 bold
-            if (type === "click" && menu.onClick) {
-                $elem.on("click", function (e) {
+            if (type === 'click' && menu.onClick) {
+                $elem.on('click', function (e) {
                     if (editor.selection.getRange() == null) {
                         return;
                     }
@@ -2972,8 +2972,8 @@ Menus.prototype = {
             }
 
             // 下拉框，例如 head
-            if (type === "droplist" && droplist) {
-                $elem.on("mouseenter", function (e) {
+            if (type === 'droplist' && droplist) {
+                $elem.on('mouseenter', function (e) {
                     if (editor.selection.getRange() == null) {
                         return;
                     }
@@ -2981,7 +2981,7 @@ Menus.prototype = {
                     droplist.showTimeoutId = setTimeout(function () {
                         droplist.show();
                     }, 200);
-                }).on("mouseleave", function (e) {
+                }).on('mouseleave', function (e) {
                     // 隐藏
                     droplist.hideTimeoutId = setTimeout(function () {
                         droplist.hide();
@@ -2990,8 +2990,8 @@ Menus.prototype = {
             }
 
             // 弹框类型，例如 link
-            if (type === "panel" && menu.onClick) {
-                $elem.on("click", function (e) {
+            if (type === 'panel' && menu.onClick) {
+                $elem.on('click', function (e) {
                     e.stopPropagation();
                     if (editor.selection.getRange() == null) {
                         return;
@@ -3025,9 +3025,9 @@ function getPasteText(e) {
     var clipboardData = e.clipboardData || e.originalEvent && e.originalEvent.clipboardData;
     var pasteText = void 0;
     if (clipboardData == null) {
-        pasteText = window.clipboardData && window.clipboardData.getData("text");
+        pasteText = window.clipboardData && window.clipboardData.getData('text');
     } else {
-        pasteText = clipboardData.getData("text/plain");
+        pasteText = clipboardData.getData('text/plain');
     }
 
     return replaceHtmlSymbol(pasteText);
@@ -3039,42 +3039,42 @@ function getPasteHtml(e, filterStyle, ignoreImg) {
     var pasteText = void 0,
         pasteHtml = void 0;
     if (clipboardData == null) {
-        pasteText = window.clipboardData && window.clipboardData.getData("text");
+        pasteText = window.clipboardData && window.clipboardData.getData('text');
     } else {
-        pasteText = clipboardData.getData("text/plain");
-        pasteHtml = clipboardData.getData("text/html");
+        pasteText = clipboardData.getData('text/plain');
+        pasteHtml = clipboardData.getData('text/html');
     }
     if (!pasteHtml && pasteText) {
-        pasteHtml = "<p>" + replaceHtmlSymbol(pasteText) + "</p>";
+        pasteHtml = '<p>' + replaceHtmlSymbol(pasteText) + '</p>';
     }
     if (!pasteHtml) {
         return;
     }
 
     // 过滤word中状态过来的无用字符
-    var docSplitHtml = pasteHtml.split("</html>");
+    var docSplitHtml = pasteHtml.split('</html>');
     if (docSplitHtml.length === 2) {
         pasteHtml = docSplitHtml[0];
     }
 
     // 过滤无用标签
-    pasteHtml = pasteHtml.replace(/<(meta|script|link).+?>/igm, "");
+    pasteHtml = pasteHtml.replace(/<(meta|script|link).+?>/igm, '');
     // 去掉注释
-    pasteHtml = pasteHtml.replace(/<!--.*?-->/mg, "");
+    pasteHtml = pasteHtml.replace(/<!--.*?-->/mg, '');
     // 过滤 data-xxx 属性
-    pasteHtml = pasteHtml.replace(/\s?data-.+?=("|').+?("|')/igm, "");
+    pasteHtml = pasteHtml.replace(/\s?data-.+?=('|").+?('|")/igm, '');
 
     if (ignoreImg) {
         // 忽略图片
-        pasteHtml = pasteHtml.replace(/<img.+?>/igm, "");
+        pasteHtml = pasteHtml.replace(/<img.+?>/igm, '');
     }
 
     if (filterStyle) {
         // 过滤样式
-        pasteHtml = pasteHtml.replace(/\s?(class|style)=("|').*?("|')/igm, "");
+        pasteHtml = pasteHtml.replace(/\s?(class|style)=('|").*?('|")/igm, '');
     } else {
         // 保留样式
-        pasteHtml = pasteHtml.replace(/\s?class=("|').*?("|')/igm, "");
+        pasteHtml = pasteHtml.replace(/\s?class=('|").*?('|")/igm, '');
     }
 
     return pasteHtml;
@@ -3167,7 +3167,7 @@ Text.prototype = {
 
     // 清空内容
     clear: function clear() {
-        this.html("<p><br/></p>");
+        this.html('<p><br/></p>');
     },
 
     // 获取 设置 html
@@ -3178,7 +3178,7 @@ Text.prototype = {
         if (val == null) {
             html = $textElem.html();
             // 未选中任何内容的时候点击“加粗”或者“斜体”等按钮，就得需要一个空的占位符 &#8203 ，这里替换掉
-            html = html.replace(/\u200b/gm, "");
+            html = html.replace(/\u200b/gm, '');
             return html;
         } else {
             $textElem.html(val);
@@ -3203,10 +3203,10 @@ Text.prototype = {
         if (val == null) {
             text = $textElem.text();
             // 未选中任何内容的时候点击“加粗”或者“斜体”等按钮，就得需要一个空的占位符 &#8203 ，这里替换掉
-            text = text.replace(/\u200b/gm, "");
+            text = text.replace(/\u200b/gm, '');
             return text;
         } else {
-            $textElem.text("<p>" + val + "</p>");
+            $textElem.text('<p>' + val + '</p>');
 
             // 初始化选取，将光标定位到内容尾部
             editor.initSelection();
@@ -3260,15 +3260,15 @@ Text.prototype = {
             editor.menus.changeActive();
         }
         // 按键后保存
-        $textElem.on("keyup", saveRange);
-        $textElem.on("mousedown", function (e) {
+        $textElem.on('keyup', saveRange);
+        $textElem.on('mousedown', function (e) {
             // mousedown 状态下，鼠标滑动到编辑区域外面，也需要保存选区
-            $textElem.on("mouseleave", saveRange);
+            $textElem.on('mouseleave', saveRange);
         });
-        $textElem.on("mouseup", function (e) {
+        $textElem.on('mouseup', function (e) {
             saveRange();
             // 在编辑器区域之内完成点击，取消鼠标滑动到编辑区外面的事件
-            $textElem.off("mouseleave", saveRange);
+            $textElem.off('mouseleave', saveRange);
         });
     },
 
@@ -3278,7 +3278,7 @@ Text.prototype = {
         var $textElem = editor.$textElem;
 
         function insertEmptyP($selectionElem) {
-            var $p = $("<p><br/></p>");
+            var $p = $('<p><br/></p>');
             $p.insertBefore($selectionElem);
             editor.selection.createRangeByElem($p, true);
             editor.selection.restoreSelection();
@@ -3290,7 +3290,7 @@ Text.prototype = {
             var $selectionElem = editor.selection.getSelectionContainerElem();
             var $parentElem = $selectionElem.parent();
 
-            if ($parentElem.html() === "<code><br/></code>") {
+            if ($parentElem.html() === '<code><br/></code>') {
                 // 回车之前光标所在一个 <p><code>.....</code></p> ，忽然回车生成一个空的 <p><code><br/></code></p>
                 // 而且继续回车跳不出去，因此只能特殊处理
                 insertEmptyP($selectionElem);
@@ -3303,7 +3303,7 @@ Text.prototype = {
             }
 
             var nodeName = $selectionElem.getNodeName();
-            if (nodeName === "P") {
+            if (nodeName === 'P') {
                 // 当前的标签是 P ，不用做处理
                 return;
             }
@@ -3317,7 +3317,7 @@ Text.prototype = {
             insertEmptyP($selectionElem);
         }
 
-        $textElem.on("keyup", function (e) {
+        $textElem.on('keyup', function (e) {
             if (e.keyCode !== 13) {
                 // 不是回车键
                 return;
@@ -3336,12 +3336,12 @@ Text.prototype = {
             var selectionNodeName = $selectionElem.getNodeName();
             var parentNodeName = $parentElem.getNodeName();
 
-            if (selectionNodeName !== "CODE" || parentNodeName !== "PRE") {
+            if (selectionNodeName !== 'CODE' || parentNodeName !== 'PRE') {
                 // 不符合要求 忽略
                 return;
             }
 
-            if (!editor.cmd.queryCommandSupported("insertHTML")) {
+            if (!editor.cmd.queryCommandSupported('insertHTML')) {
                 // 必须原生支持 insertHTML 命令
                 return;
             }
@@ -3350,7 +3350,7 @@ Text.prototype = {
             if (editor._willBreakCode === true) {
                 // 此时可以跳出代码块
                 // 插入 <p> ，并将选取定位到 <p>
-                var $p = $("<p><br/></p>");
+                var $p = $('<p><br/></p>');
                 $p.insertAfter($parentElem);
                 editor.selection.createRangeByElem($p, true);
                 editor.selection.restoreSelection();
@@ -3365,11 +3365,11 @@ Text.prototype = {
             var _startOffset = editor.selection.getRange().startOffset;
 
             // 处理：回车时，不能插入 <br/> 而是插入 \n ，因为是在 pre 标签里面
-            editor.cmd.do("insertHTML", "\n");
+            editor.cmd.do('insertHTML', '\n');
             editor.selection.saveRange();
             if (editor.selection.getRange().startOffset === _startOffset) {
                 // 没起作用，再来一遍
-                editor.cmd.do("insertHTML", "\n");
+                editor.cmd.do('insertHTML', '\n');
             }
 
             var codeLength = $selectionElem.html().length;
@@ -3383,7 +3383,7 @@ Text.prototype = {
             e.preventDefault();
         }
 
-        $textElem.on("keydown", function (e) {
+        $textElem.on('keydown', function (e) {
             if (e.keyCode !== 13) {
                 // 不是回车键
                 // 取消即将跳转代码块的记录
@@ -3400,30 +3400,30 @@ Text.prototype = {
         var editor = this.editor;
         var $textElem = editor.$textElem;
 
-        $textElem.on("keydown", function (e) {
+        $textElem.on('keydown', function (e) {
             if (e.keyCode !== 8) {
                 return;
             }
             var txtHtml = $textElem.html().toLowerCase().trim();
-            if (txtHtml === "<p><br/></p>") {
+            if (txtHtml === '<p><br/></p>') {
                 // 最后剩下一个空行，就不再删除了
                 e.preventDefault();
                 return;
             }
         });
 
-        $textElem.on("keyup", function (e) {
+        $textElem.on('keyup', function (e) {
             if (e.keyCode !== 8) {
                 return;
             }
             var $p = void 0;
             var txtHtml = $textElem.html().toLowerCase().trim();
 
-            // firefox 时用 txtHtml === "<br/>" 判断，其他用 !txtHtml 判断
-            if (!txtHtml || txtHtml === "<br/>") {
+            // firefox 时用 txtHtml === '<br/>' 判断，其他用 !txtHtml 判断
+            if (!txtHtml || txtHtml === '<br/>') {
                 // 内容空了
-                $p = $("<p><br/></p>");
-                $textElem.html(""); // 一定要先清空，否则在 firefox 下有问题
+                $p = $('<p><br/></p>');
+                $textElem.html(''); // 一定要先清空，否则在 firefox 下有问题
                 $textElem.append($p);
                 editor.selection.createRangeByElem($p, false, true);
                 editor.selection.restoreSelection();
@@ -3458,7 +3458,7 @@ Text.prototype = {
         }
 
         // 粘贴文字
-        $textElem.on("paste", function (e) {
+        $textElem.on('paste', function (e) {
             if (UA.isIE()) {
                 return;
             } else {
@@ -3474,7 +3474,7 @@ Text.prototype = {
             // 获取粘贴的文字
             var pasteHtml = getPasteHtml(e, pasteFilterStyle, ignoreImg);
             var pasteText = getPasteText(e);
-            pasteText = pasteText.replace(/\n/gm, "<br/>");
+            pasteText = pasteText.replace(/\n/gm, '<br/>');
 
             var $selectionElem = editor.selection.getSelectionContainerElem();
             if (!$selectionElem) {
@@ -3483,18 +3483,18 @@ Text.prototype = {
             var nodeName = $selectionElem.getNodeName();
 
             // code 中只能粘贴纯文本
-            if (nodeName === "CODE" || nodeName === "PRE") {
+            if (nodeName === 'CODE' || nodeName === 'PRE') {
                 if (pasteTextHandle && isFunction(pasteTextHandle)) {
                     // 用户自定义过滤处理粘贴内容
-                    pasteText = "" + (pasteTextHandle(pasteText) || "");
+                    pasteText = '' + (pasteTextHandle(pasteText) || '');
                 }
-                editor.cmd.do("insertHTML", "<p>" + pasteText + "</p>");
+                editor.cmd.do('insertHTML', '<p>' + pasteText + '</p>');
                 return;
             }
 
             // 先放开注释，有问题再追查 ————
             // // 表格中忽略，可能会出现异常问题
-            // if (nodeName === "TD" || nodeName === "TH") {
+            // if (nodeName === 'TD' || nodeName === 'TH') {
             //     return
             // }
 
@@ -3508,21 +3508,21 @@ Text.prototype = {
                 // 因此执行 insertHTML 会报错
                 if (pasteTextHandle && isFunction(pasteTextHandle)) {
                     // 用户自定义过滤处理粘贴内容
-                    pasteHtml = "" + (pasteTextHandle(pasteHtml) || "");
+                    pasteHtml = '' + (pasteTextHandle(pasteHtml) || '');
                 }
-                editor.cmd.do("insertHTML", pasteHtml);
+                editor.cmd.do('insertHTML', pasteHtml);
             } catch (ex) {
                 // 此时使用 pasteText 来兼容一下
                 if (pasteTextHandle && isFunction(pasteTextHandle)) {
                     // 用户自定义过滤处理粘贴内容
-                    pasteText = "" + (pasteTextHandle(pasteText) || "");
+                    pasteText = '' + (pasteTextHandle(pasteText) || '');
                 }
-                editor.cmd.do("insertHTML", "<p>" + pasteText + "</p>");
+                editor.cmd.do('insertHTML', '<p>' + pasteText + '</p>');
             }
         });
 
         // 粘贴图片
-        $textElem.on("paste", function (e) {
+        $textElem.on('paste', function (e) {
             if (UA.isIE()) {
                 return;
             } else {
@@ -3548,7 +3548,7 @@ Text.prototype = {
             var nodeName = $selectionElem.getNodeName();
 
             // code 中粘贴忽略
-            if (nodeName === "CODE" || nodeName === "PRE") {
+            if (nodeName === 'CODE' || nodeName === 'PRE') {
                 return;
             }
 
@@ -3563,11 +3563,11 @@ Text.prototype = {
         var editor = this.editor;
         var $textElem = editor.$textElem;
 
-        $textElem.on("keydown", function (e) {
+        $textElem.on('keydown', function (e) {
             if (e.keyCode !== 9) {
                 return;
             }
-            if (!editor.cmd.queryCommandSupported("insertHTML")) {
+            if (!editor.cmd.queryCommandSupported('insertHTML')) {
                 // 必须原生支持 insertHTML 命令
                 return;
             }
@@ -3579,12 +3579,12 @@ Text.prototype = {
             var selectionNodeName = $selectionElem.getNodeName();
             var parentNodeName = $parentElem.getNodeName();
 
-            if (selectionNodeName === "CODE" && parentNodeName === "PRE") {
+            if (selectionNodeName === 'CODE' && parentNodeName === 'PRE') {
                 // <pre><code> 里面
-                editor.cmd.do("insertHTML", "    ");
+                editor.cmd.do('insertHTML', '    ');
             } else {
                 // 普通文字
-                editor.cmd.do("insertHTML", "&nbsp;&nbsp;&nbsp;&nbsp;");
+                editor.cmd.do('insertHTML', '&nbsp;&nbsp;&nbsp;&nbsp;');
             }
 
             e.preventDefault();
@@ -3597,11 +3597,11 @@ Text.prototype = {
         var $textElem = editor.$textElem;
 
         // 为图片增加 selected 样式
-        $textElem.on("click", "img", function (e) {
+        $textElem.on('click', 'img', function (e) {
             var img = this;
             var $img = $(img);
 
-            if ($img.attr("data-w-e") === "1") {
+            if ($img.attr('data-w-e') === '1') {
                 // 是表情图片，忽略
                 return;
             }
@@ -3615,8 +3615,8 @@ Text.prototype = {
         });
 
         // 去掉图片的 selected 样式
-        $textElem.on("click  keyup", function (e) {
-            if (e.target.matches("img")) {
+        $textElem.on('click  keyup', function (e) {
+            if (e.target.matches('img')) {
                 // 点击的是图片，忽略
                 return;
             }
@@ -3631,13 +3631,13 @@ Text.prototype = {
 
         // 禁用 document 拖拽事件
         var $document = $(document);
-        $document.on("dragleave drop dragenter dragover", function (e) {
+        $document.on('dragleave drop dragenter dragover', function (e) {
             e.preventDefault();
         });
 
         // 添加编辑区域拖拽事件
         var $textElem = editor.$textElem;
-        $textElem.on("drop", function (e) {
+        $textElem.on('drop', function (e) {
             e.preventDefault();
             var files = e.dataTransfer && e.dataTransfer.files;
             if (!files || !files.length) {
@@ -3670,7 +3670,7 @@ Command.prototype = {
 
         // 使用 styleWithCSS
         if (!editor._useStyleWithCSS) {
-            document.execCommand("styleWithCSS", null, true);
+            document.execCommand('styleWithCSS', null, true);
             editor._useStyleWithCSS = true;
         }
 
@@ -3683,7 +3683,7 @@ Command.prototype = {
         editor.selection.restoreSelection();
 
         // 执行
-        var _name = "_" + name;
+        var _name = '_' + name;
         if (this[_name]) {
             // 有自定义事件
             this[_name](value);
@@ -3708,9 +3708,9 @@ Command.prototype = {
         var editor = this.editor;
         var range = editor.selection.getRange();
 
-        if (this.queryCommandSupported("insertHTML")) {
+        if (this.queryCommandSupported('insertHTML')) {
             // W3C
-            this._execCommand("insertHTML", html);
+            this._execCommand('insertHTML', html);
         } else if (range.insertNode) {
             // IE
             range.deleteContents();
@@ -3794,7 +3794,7 @@ API.prototype = {
         }
 
         // 判断选区内容是否在不可编辑区域之内
-        if ($containerElem.attr("contenteditable") === "false" || $containerElem.parentUntil("[contenteditable=false]")) {
+        if ($containerElem.attr('contenteditable') === 'false' || $containerElem.parentUntil('[contenteditable=false]')) {
             return;
         }
 
@@ -3824,7 +3824,7 @@ API.prototype = {
         if (range) {
             return this._currentRange.toString();
         } else {
-            return "";
+            return '';
         }
     },
 
@@ -3893,14 +3893,14 @@ API.prototype = {
             // 目前只支持 webkit 内核
             if (UA.isWebkit()) {
                 // 插入 &#8203
-                editor.cmd.do("insertHTML", "&#8203;");
+                editor.cmd.do('insertHTML', '&#8203;');
                 // 修改 offset 位置
                 range.setEnd(range.endContainer, range.endOffset + 1);
                 // 存储
                 this.saveRange(range);
             } else {
-                $elem = $("<strong>&#8203;</strong>");
-                editor.cmd.do("insertElem", $elem);
+                $elem = $('<strong>&#8203;</strong>');
+                editor.cmd.do('insertElem', $elem);
                 this.createRangeByElem($elem, true);
             }
         } catch (ex) {
@@ -3926,7 +3926,7 @@ API.prototype = {
             range.selectNode(elem);
         }
 
-        if (typeof toStart === "boolean") {
+        if (typeof toStart === 'boolean') {
             range.collapse(toStart);
         }
 
@@ -3946,7 +3946,7 @@ function Progress(editor) {
     this._isRender = false;
     this._timeoutId = 0;
     this.$textContainer = editor.$textContainerElem;
-    this.$bar = $("<div class='w-e-progress'></div>");
+    this.$bar = $('<div class="w-e-progress"></div>');
 }
 
 Progress.prototype = {
@@ -3973,7 +3973,7 @@ Progress.prototype = {
         // 改变进度（节流，100ms 渲染一次）
         if (Date.now() - this._time > 100) {
             if (progress <= 1) {
-                $bar.css("width", progress * 100 + "%");
+                $bar.css('width', progress * 100 + '%');
                 this._time = Date.now();
             }
         }
@@ -3999,10 +3999,10 @@ Progress.prototype = {
     }
 };
 
-var _typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function (obj) {
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
 } : function (obj) {
-  return obj && typeof Symbol === 'function' && obj.constructor === Symbol && obj !== Symbol.prototype ? 'symbol' : typeof obj;
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
 /*
@@ -4025,9 +4025,9 @@ UploadImg.prototype = {
         var customAlert = editor.config.customAlert;
 
         if (debug) {
-            throw new Error("wangEditor: " + (debugInfo || alertInfo));
+            throw new Error('wangEditor: ' + (debugInfo || alertInfo));
         } else {
-            if (customAlert && typeof customAlert === "function") {
+            if (customAlert && typeof customAlert === 'function') {
                 customAlert(alertInfo);
             } else {
                 alert(alertInfo);
@@ -4048,22 +4048,22 @@ UploadImg.prototype = {
         // 校验格式
         var linkImgCheck = config.linkImgCheck;
         var checkResult = void 0;
-        if (linkImgCheck && typeof linkImgCheck === "function") {
+        if (linkImgCheck && typeof linkImgCheck === 'function') {
             checkResult = linkImgCheck(link);
-            if (typeof checkResult === "string") {
+            if (typeof checkResult === 'string') {
                 // 校验失败，提示信息
                 alert(checkResult);
                 return;
             }
         }
 
-        editor.cmd.do("insertHTML", "<img src='" + link + "' style='max-width:100%;'/>");
+        editor.cmd.do('insertHTML', '<img src="' + link + '" style="max-width:100%;"/>');
 
         // 验证图片 url 是否有效，无效的话给出提示
-        var img = document.createElement("img");
+        var img = document.createElement('img');
         img.onload = function () {
             var callback = config.linkImgCallback;
-            if (callback && typeof callback === "function") {
+            if (callback && typeof callback === 'function') {
                 callback(link);
             }
 
@@ -4072,7 +4072,7 @@ UploadImg.prototype = {
         img.onerror = function () {
             img = null;
             // 无法成功下载图片
-            _this2._alert("插入图片错误", "wangEditor: \u63D2\u5165\u56FE\u7247\u51FA\u9519\uFF0C\u56FE\u7247\u94FE\u63A5\u662F '" + link + "'\uFF0C\u4E0B\u8F7D\u8BE5\u94FE\u63A5\u5931\u8D25");
+            _this2._alert('插入图片错误', 'wangEditor: \u63D2\u5165\u56FE\u7247\u51FA\u9519\uFF0C\u56FE\u7247\u94FE\u63A5\u662F "' + link + '"\uFF0C\u4E0B\u8F7D\u8BE5\u94FE\u63A5\u5931\u8D25');
             return;
         };
         img.onabort = function () {
@@ -4098,7 +4098,7 @@ UploadImg.prototype = {
         var maxSize = config.uploadImgMaxSize;
         var maxSizeM = maxSize / 1024 / 1024;
         var maxLength = config.uploadImgMaxLength || 10000;
-        var uploadFileName = config.uploadFileName || "";
+        var uploadFileName = config.uploadFileName || '';
         var uploadImgParams = config.uploadImgParams || {};
         var uploadImgParamsWithUrl = config.uploadImgParamsWithUrl;
         var uploadImgHeaders = config.uploadImgHeaders || {};
@@ -4131,12 +4131,12 @@ UploadImg.prototype = {
 
             if (/\.(jpg|jpeg|png|bmp|gif|webp)$/i.test(name) === false) {
                 // 后缀名不合法，不是图片
-                errInfo.push("\u3010" + name + "\u3011\u4E0D\u662F\u56FE\u7247");
+                errInfo.push('\u3010' + name + '\u3011\u4E0D\u662F\u56FE\u7247');
                 return;
             }
             if (maxSize < size) {
                 // 上传图片过大
-                errInfo.push("\u3010" + name + "\u3011\u5927\u4E8E " + maxSizeM + "M");
+                errInfo.push('\u3010' + name + '\u3011\u5927\u4E8E ' + maxSizeM + 'M');
                 return;
             }
 
@@ -4145,16 +4145,16 @@ UploadImg.prototype = {
         });
         // 抛出验证信息
         if (errInfo.length) {
-            this._alert("图片验证未通过: \n" + errInfo.join("\n"));
+            this._alert('图片验证未通过: \n' + errInfo.join('\n'));
             return;
         }
         if (resultFiles.length > maxLength) {
-            this._alert("一次最多上传" + maxLength + "张图片");
+            this._alert('一次最多上传' + maxLength + '张图片');
             return;
         }
 
         // ------------------------------ 自定义上传 ------------------------------
-        if (customUploadImg && typeof customUploadImg === "function") {
+        if (customUploadImg && typeof customUploadImg === 'function') {
             customUploadImg(resultFiles, this.insertLinkImg.bind(this));
 
             // 阻止以下代码执行
@@ -4169,45 +4169,45 @@ UploadImg.prototype = {
         });
 
         // ------------------------------ 上传图片 ------------------------------
-        if (uploadImgServer && typeof uploadImgServer === "string") {
+        if (uploadImgServer && typeof uploadImgServer === 'string') {
             // 添加参数
-            var uploadImgServerArr = uploadImgServer.split("#");
+            var uploadImgServerArr = uploadImgServer.split('#');
             uploadImgServer = uploadImgServerArr[0];
-            var uploadImgServerHash = uploadImgServerArr[1] || "";
+            var uploadImgServerHash = uploadImgServerArr[1] || '';
             objForEach(uploadImgParams, function (key, val) {
                 // 因使用者反应，自定义参数不能默认 encode ，由 v3.1.1 版本开始注释掉
                 // val = encodeURIComponent(val)
 
                 // 第一，将参数拼接到 url 中
                 if (uploadImgParamsWithUrl) {
-                    if (uploadImgServer.indexOf("?") > 0) {
-                        uploadImgServer += "&";
+                    if (uploadImgServer.indexOf('?') > 0) {
+                        uploadImgServer += '&';
                     } else {
-                        uploadImgServer += "?";
+                        uploadImgServer += '?';
                     }
-                    uploadImgServer = uploadImgServer + key + "=" + val;
+                    uploadImgServer = uploadImgServer + key + '=' + val;
                 }
 
                 // 第二，将参数添加到 formdata 中
                 formdata.append(key, val);
             });
             if (uploadImgServerHash) {
-                uploadImgServer += "#" + uploadImgServerHash;
+                uploadImgServer += '#' + uploadImgServerHash;
             }
 
             // 定义 xhr
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", uploadImgServer);
+            xhr.open('POST', uploadImgServer);
 
             // 设置超时
             xhr.timeout = timeout;
             xhr.ontimeout = function () {
                 // hook - timeout
-                if (hooks.timeout && typeof hooks.timeout === "function") {
+                if (hooks.timeout && typeof hooks.timeout === 'function') {
                     hooks.timeout(xhr, editor);
                 }
 
-                _this3._alert("上传图片超时");
+                _this3._alert('上传图片超时');
             };
 
             // 监控 progress
@@ -4229,39 +4229,39 @@ UploadImg.prototype = {
                 if (xhr.readyState === 4) {
                     if (xhr.status < 200 || xhr.status >= 300) {
                         // hook - error
-                        if (hooks.error && typeof hooks.error === "function") {
+                        if (hooks.error && typeof hooks.error === 'function') {
                             hooks.error(xhr, editor);
                         }
 
                         // xhr 返回状态错误
-                        _this3._alert("上传图片发生错误", "\u4E0A\u4F20\u56FE\u7247\u53D1\u751F\u9519\u8BEF\uFF0C\u670D\u52A1\u5668\u8FD4\u56DE\u72B6\u6001\u662F " + xhr.status);
+                        _this3._alert('上传图片发生错误', '\u4E0A\u4F20\u56FE\u7247\u53D1\u751F\u9519\u8BEF\uFF0C\u670D\u52A1\u5668\u8FD4\u56DE\u72B6\u6001\u662F ' + xhr.status);
                         return;
                     }
 
                     result = xhr.responseText;
-                    if ((typeof result === "undefined" ? "undefined" : _typeof(result)) !== "object") {
+                    if ((typeof result === 'undefined' ? 'undefined' : _typeof(result)) !== 'object') {
                         try {
                             result = JSON.parse(result);
                         } catch (ex) {
                             // hook - fail
-                            if (hooks.fail && typeof hooks.fail === "function") {
+                            if (hooks.fail && typeof hooks.fail === 'function') {
                                 hooks.fail(xhr, editor, result);
                             }
 
-                            _this3._alert("上传图片失败", "上传图片返回结果错误，返回结果是: " + result);
+                            _this3._alert('上传图片失败', '上传图片返回结果错误，返回结果是: ' + result);
                             return;
                         }
                     }
-                    if (!hooks.customInsert && result.errno != "0") {
+                    if (!hooks.customInsert && result.errno != '0') {
                         // hook - fail
-                        if (hooks.fail && typeof hooks.fail === "function") {
+                        if (hooks.fail && typeof hooks.fail === 'function') {
                             hooks.fail(xhr, editor, result);
                         }
 
                         // 数据错误
-                        _this3._alert("上传图片失败", "上传图片返回结果错误，返回结果 errno=" + result.errno);
+                        _this3._alert('上传图片失败', '上传图片返回结果错误，返回结果 errno=' + result.errno);
                     } else {
-                        if (hooks.customInsert && typeof hooks.customInsert === "function") {
+                        if (hooks.customInsert && typeof hooks.customInsert === 'function') {
                             // 使用者自定义插入方法
                             hooks.customInsert(_this3.insertLinkImg.bind(_this3), result, editor);
                         } else {
@@ -4273,7 +4273,7 @@ UploadImg.prototype = {
                         }
 
                         // hook - success
-                        if (hooks.success && typeof hooks.success === "function") {
+                        if (hooks.success && typeof hooks.success === 'function') {
                             hooks.success(xhr, editor, result);
                         }
                     }
@@ -4281,11 +4281,11 @@ UploadImg.prototype = {
             };
 
             // hook - before
-            if (hooks.before && typeof hooks.before === "function") {
+            if (hooks.before && typeof hooks.before === 'function') {
                 var beforeResult = hooks.before(xhr, editor, resultFiles);
-                if (beforeResult && (typeof beforeResult === "undefined" ? "undefined" : _typeof(beforeResult)) === "object") {
+                if (beforeResult && (typeof beforeResult === 'undefined' ? 'undefined' : _typeof(beforeResult)) === 'object') {
                     if (beforeResult.prevent) {
-                        // 如果返回的结果是 {prevent: true, msg: "xxxx"} 则表示用户放弃上传
+                        // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
                         this._alert(beforeResult.msg);
                         return;
                     }
@@ -4332,10 +4332,10 @@ var editorId = 1;
 function Editor(toolbarSelector, textSelector) {
     if (toolbarSelector == null) {
         // 没有传入任何参数，报错
-        throw new Error("错误：初始化编辑器时候未传入任何参数，请查阅文档");
+        throw new Error('错误：初始化编辑器时候未传入任何参数，请查阅文档');
     }
     // id，用以区分单个页面不同的编辑器对象
-    this.id = "wangEditor-" + editorId++;
+    this.id = 'wangEditor-' + editorId++;
 
     this.toolbarSelector = toolbarSelector;
     this.textSelector = textSelector;
@@ -4361,7 +4361,7 @@ Editor.prototype = {
             // key 即需要生成正则表达式的规则，如“插入链接”
             // val 即需要被替换成的语言，如“insert link”
             langArgs.push({
-                reg: new RegExp(key, "img"),
+                reg: new RegExp(key, 'img'),
                 val: val
 
             });
@@ -4388,8 +4388,8 @@ Editor.prototype = {
 
         if (textSelector == null) {
             // 只传入一个参数，即是容器的选择器或元素，toolbar 和 text 的元素自行创建
-            $toolbarElem = $("<div></div>");
-            $textContainerElem = $("<div></div>");
+            $toolbarElem = $('<div></div>');
+            $textContainerElem = $('<div></div>');
 
             // 将编辑器区域原有的内容，暂存起来
             $children = $toolbarSelector.children();
@@ -4398,8 +4398,8 @@ Editor.prototype = {
             $toolbarSelector.append($toolbarElem).append($textContainerElem);
 
             // 自行创建的，需要配置默认的样式
-            $toolbarElem.css("background-color", "#f1f1f1").css("border", "1px solid #ccc");
-            $textContainerElem.css("border", "1px solid #ccc").css("border-top", "none").css("height", "300px");
+            $toolbarElem.css('background-color', '#f1f1f1').css('border', '1px solid #ccc');
+            $textContainerElem.css('border', '1px solid #ccc').css('border-top', 'none').css('height', '300px');
         } else {
             // toolbar 和 text 的选择器都有值，记录属性
             $toolbarElem = $toolbarSelector;
@@ -4409,30 +4409,30 @@ Editor.prototype = {
         }
 
         // 编辑区域
-        $textElem = $("<div></div>");
-        $textElem.attr("contenteditable", "true").css("width", "100%").css("height", "100%");
+        $textElem = $('<div></div>');
+        $textElem.attr('contenteditable', 'true').css('width', '100%').css('height', '100%');
 
         // 初始化编辑区域内容
         if ($children && $children.length) {
             $textElem.append($children);
         } else {
-            $textElem.append($("<p><br/></p>"));
+            $textElem.append($('<p><br/></p>'));
         }
 
         // 编辑区域加入DOM
         $textContainerElem.append($textElem);
 
         // 设置通用的 class
-        $toolbarElem.addClass("w-e-toolbar");
-        $textContainerElem.addClass("w-e-text-container");
-        $textContainerElem.css("z-index", zIndex);
-        $textElem.addClass("w-e-text");
+        $toolbarElem.addClass('w-e-toolbar');
+        $textContainerElem.addClass('w-e-text-container');
+        $textContainerElem.css('z-index', zIndex);
+        $textElem.addClass('w-e-text');
 
         // 添加 ID
-        var toolbarElemId = getRandom("toolbar-elem");
-        $toolbarElem.attr("id", toolbarElemId);
-        var textElemId = getRandom("text-elem");
-        $textElem.attr("id", textElemId);
+        var toolbarElemId = getRandom('toolbar-elem');
+        $toolbarElem.attr('id', toolbarElemId);
+        var textElemId = getRandom('text-elem');
+        $textElem.attr('id', textElemId);
 
         // 记录属性
         this.$toolbarElem = $toolbarElem;
@@ -4443,21 +4443,21 @@ Editor.prototype = {
 
         // 记录输入法的开始和结束
         var compositionEnd = true;
-        $textContainerElem.on("compositionstart", function () {
+        $textContainerElem.on('compositionstart', function () {
             // 输入法开始输入
             compositionEnd = false;
         });
-        $textContainerElem.on("compositionend", function () {
+        $textContainerElem.on('compositionend', function () {
             // 输入法结束输入
             compositionEnd = true;
         });
 
         // 绑定 onchange
-        $textContainerElem.on("click keyup", function () {
+        $textContainerElem.on('click keyup', function () {
             // 输入法结束才出发 onchange
             compositionEnd && _this.change && _this.change();
         });
-        $toolbarElem.on("click", function () {
+        $toolbarElem.on('click', function () {
             this.change && this.change();
         });
 
@@ -4466,7 +4466,7 @@ Editor.prototype = {
             // 当前编辑器是否是焦点状态
             this.isFocus = false;
 
-            $(document).on("click", function (e) {
+            $(document).on('click', function (e) {
                 //判断当前点击元素是否在编辑器内
                 var isChild = $textElem.isContain($(e.target));
 
@@ -4527,7 +4527,7 @@ Editor.prototype = {
         var $children = $textElem.children();
         if (!$children.length) {
             // 如果编辑器区域无内容，添加一个空行，重新设置选区
-            $textElem.append($("<p><br/></p>"));
+            $textElem.append($('<p><br/></p>'));
             this.initSelection();
             return;
         }
@@ -4538,9 +4538,9 @@ Editor.prototype = {
             // 新增一个空行
             var html = $last.html().toLowerCase();
             var nodeName = $last.getNodeName();
-            if (html !== "<br/>" && html !== "<br\/>" || nodeName !== "P") {
+            if (html !== '<br/>' && html !== '<br\/>' || nodeName !== 'P') {
                 // 最后一个元素不是 <p><br/></p>，添加一个空行，重新设置选区
-                $textElem.append($("<p><br/></p>"));
+                $textElem.append($('<p><br/></p>'));
                 this.initSelection();
                 return;
             }
@@ -4565,10 +4565,10 @@ Editor.prototype = {
         }
 
         var onchange = config$$1.onchange;
-        if (onchange && typeof onchange === "function") {
+        if (onchange && typeof onchange === 'function') {
             // 触发 change 的有三个场景：
-            // 1. $textContainerElem.on("click keyup")
-            // 2. $toolbarElem.on("click")
+            // 1. $textContainerElem.on('click keyup')
+            // 2. $toolbarElem.on('click')
             // 3. editor.cmd.do()
             this.change = function () {
                 // 判断是否有变化
@@ -4595,7 +4595,7 @@ Editor.prototype = {
 
         // -------- 绑定 onblur 事件 --------
         var onblur = config$$1.onblur;
-        if (onblur && typeof onblur === "function") {
+        if (onblur && typeof onblur === 'function') {
             this.onblur = function () {
                 var currentHtml = this.txt.html();
                 onblur(currentHtml);
@@ -4604,7 +4604,7 @@ Editor.prototype = {
 
         // -------- 绑定 onfocus 事件 --------
         var onfocus = config$$1.onfocus;
-        if (onfocus && typeof onfocus === "function") {
+        if (onfocus && typeof onfocus === 'function') {
             this.onfocus = function () {
                 onfocus();
             };
@@ -4651,20 +4651,20 @@ Editor.prototype = {
 try {
     document;
 } catch (ex) {
-    throw new Error("请在浏览器环境下运行");
+    throw new Error('请在浏览器环境下运行');
 }
 
 // polyfill
 polyfill();
 
-// 这里的 'inlinecss' 将被替换成 css 代码的内容，详情可去 ./gulpfile.js 中搜索 'inlinecss' 关键字
-var inlinecss = ".w-e-toolbar,.w-e-text-container,.w-e-menu-panel {  padding: 0;  margin: 0;  box-sizing: border-box;}.w-e-toolbar *,.w-e-text-container *,.w-e-menu-panel * {  padding: 0;  margin: 0;  box-sizing: border-box;}.w-e-clear-fix:after {  content: '';  display: table;  clear: both;}.w-e-toolbar .w-e-droplist {  position: absolute;  left: 0;  top: 0;  background-color: #fff;  border: 1px solid #f1f1f1;  border-right-color: #ccc;  border-bottom-color: #ccc;}.w-e-toolbar .w-e-droplist .w-e-dp-title {  text-align: center;  color: #999;  line-height: 2;  border-bottom: 1px solid #f1f1f1;  font-size: 13px;}.w-e-toolbar .w-e-droplist ul.w-e-list {  list-style: none;  line-height: 1;}.w-e-toolbar .w-e-droplist ul.w-e-list li.w-e-item {  color: #333;  padding: 5px 0;}.w-e-toolbar .w-e-droplist ul.w-e-list li.w-e-item:hover {  background-color: #f1f1f1;}.w-e-toolbar .w-e-droplist ul.w-e-block {  list-style: none;  text-align: left;  padding: 5px;}.w-e-toolbar .w-e-droplist ul.w-e-block li.w-e-item {  display: inline-block;  *display: inline;  *zoom: 1;  padding: 3px 5px;}.w-e-toolbar .w-e-droplist ul.w-e-block li.w-e-item:hover {  background-color: #f1f1f1;}@font-face {  font-family: \"w-e-icon\";  src: url(data:application/x-font-woff;charset=utf-8;base64,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) format(\"truetype\");  font-weight: normal;  font-style: normal;}[class^='w-e-icon-'],[class*=' w-e-icon-'] {  /* use !important to prevent issues with browser extensions that change fonts */  font-family: \"w-e-icon\" !important;  speak: none;  font-style: normal;  font-weight: normal;  font-variant: normal;  text-transform: none;  line-height: 1;  /* Better Font Rendering =========== */  -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale;}.w-e-icon-close:before {  content: '\\f00d';}.w-e-icon-upload2:before {  content: '\\e9c6';}.w-e-icon-trash-o:before {  content: '\\f014';}.w-e-icon-header:before {  content: '\\f1dc';}.w-e-icon-pencil2:before {  content: '\\e906';}.w-e-icon-paint-brush:before {  content: '\\f1fc';}.w-e-icon-image:before {  content: '\\e90d';}.w-e-icon-play:before {  content: '\\e912';}.w-e-icon-location:before {  content: '\\e947';}.w-e-icon-undo:before {  content: '\\e965';}.w-e-icon-redo:before {  content: '\\e966';}.w-e-icon-quotes-left:before {  content: '\\e977';}.w-e-icon-list-numbered:before {  content: '\\e9b9';}.w-e-icon-list2:before {  content: '\\e9bb';}.w-e-icon-link:before {  content: '\\e9cb';}.w-e-icon-happy:before {  content: '\\e9df';}.w-e-icon-bold:before {  content: '\\ea62';}.w-e-icon-underline:before {  content: '\\ea63';}.w-e-icon-italic:before {  content: '\\ea64';}.w-e-icon-strikethrough:before {  content: '\\ea65';}.w-e-icon-table2:before {  content: '\\ea71';}.w-e-icon-paragraph-left:before {  content: '\\ea77';}.w-e-icon-paragraph-center:before {  content: '\\ea78';}.w-e-icon-paragraph-right:before {  content: '\\ea79';}.w-e-icon-terminal:before {  content: '\\f120';}.w-e-icon-page-break:before {  content: '\\ea68';}.w-e-icon-cancel-circle:before {  content: '\\ea0d';}.w-e-icon-font:before {  content: '\\ea5c';}.w-e-icon-text-heigh:before {  content: '\\ea5f';}.w-e-toolbar {  display: -webkit-box;  display: -ms-flexbox;  display: flex;  padding: 0 5px;  /* flex-wrap: wrap; */  /* 单个菜单 */}.w-e-toolbar .w-e-menu {  position: relative;  text-align: center;  padding: 5px 10px;  cursor: pointer;}.w-e-toolbar .w-e-menu i {  color: #999;}.w-e-toolbar .w-e-menu:hover i {  color: #333;}.w-e-toolbar .w-e-active i {  color: #1e88e5;}.w-e-toolbar .w-e-active:hover i {  color: #1e88e5;}.w-e-text-container .w-e-panel-container {  position: absolute;  top: 0;  left: 50%;  border: 1px solid #ccc;  border-top: 0;  box-shadow: 1px 1px 2px #ccc;  color: #333;  background-color: #fff;  /* 为 emotion panel 定制的样式 */  /* 上传图片的 panel 定制样式 */}.w-e-text-container .w-e-panel-container .w-e-panel-close {  position: absolute;  right: 0;  top: 0;  padding: 5px;  margin: 2px 5px 0 0;  cursor: pointer;  color: #999;}.w-e-text-container .w-e-panel-container .w-e-panel-close:hover {  color: #333;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title {  list-style: none;  display: -webkit-box;  display: -ms-flexbox;  display: flex;  font-size: 14px;  margin: 2px 10px 0 10px;  border-bottom: 1px solid #f1f1f1;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title .w-e-item {  padding: 3px 5px;  color: #999;  cursor: pointer;  margin: 0 3px;  position: relative;  top: 1px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title .w-e-active {  color: #333;  border-bottom: 1px solid #333;  cursor: default;  font-weight: 700;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content {  padding: 10px 15px 10px 15px;  font-size: 16px;  /* 输入框的样式 */  /* 按钮的样式 */}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input:focus,.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea:focus,.w-e-text-container .w-e-panel-container .w-e-panel-tab-content button:focus {  outline: none;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea {  width: 100%;  border: 1px solid #ccc;  padding: 5px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea:focus {  border-color: #1e88e5;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text] {  border: none;  border-bottom: 1px solid #ccc;  font-size: 14px;  height: 20px;  color: #333;  text-align: left;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text].small {  width: 30px;  text-align: center;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text].block {  display: block;  width: 100%;  margin: 10px 0;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text]:focus {  border-bottom: 2px solid #1e88e5;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button {  font-size: 14px;  color: #1e88e5;  border: none;  padding: 5px 10px;  background-color: #fff;  cursor: pointer;  border-radius: 3px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.left {  float: left;  margin-right: 10px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.right {  float: right;  margin-left: 10px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.gray {  color: #999;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.red {  color: #c24f4a;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button:hover {  background-color: #f1f1f1;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container:after {  content: '';  display: table;  clear: both;}.w-e-text-container .w-e-panel-container .w-e-emoticon-container .w-e-item {  cursor: pointer;  font-size: 18px;  padding: 0 3px;  display: inline-block;  *display: inline;  *zoom: 1;}.w-e-text-container .w-e-panel-container .w-e-up-img-container {  text-align: center;}.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn {  display: inline-block;  *display: inline;  *zoom: 1;  color: #999;  cursor: pointer;  font-size: 60px;  line-height: 1;}.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn:hover {  color: #333;}.w-e-text-container {  position: relative;}.w-e-text-container .w-e-progress {  position: absolute;  background-color: #1e88e5;  bottom: 0;  left: 0;  height: 1px;}.w-e-text {  padding: 0 10px;  overflow-y: scroll;}.w-e-text p,.w-e-text h1,.w-e-text h2,.w-e-text h3,.w-e-text h4,.w-e-text h5,.w-e-text table,.w-e-text pre {  margin: 10px 0;  line-height: 1.5;}.w-e-text ul,.w-e-text ol {  margin: 10px 0 10px 20px;}.w-e-text blockquote {  display: block;  border-left: 8px solid #d0e5f2;  padding: 5px 10px;  margin: 10px 0;  line-height: 1.4;  font-size: 100%;  background-color: #f1f1f1;}.w-e-text code {  display: inline-block;  *display: inline;  *zoom: 1;  background-color: #f1f1f1;  border-radius: 3px;  padding: 3px 5px;  margin: 0 3px;}.w-e-text pre code {  display: block;}.w-e-text table {  border-top: 1px solid #ccc;  border-left: 1px solid #ccc;}.w-e-text table td,.w-e-text table th {  border-bottom: 1px solid #ccc;  border-right: 1px solid #ccc;  padding: 3px 5px;}.w-e-text table th {  border-bottom: 2px solid #ccc;  text-align: center;}.w-e-text:focus {  outline: none;}.w-e-text img {  cursor: pointer;}.w-e-text img:hover {  box-shadow: 0 0 5px #333;}";
+// 这里的 `inlinecss` 将被替换成 css 代码的内容，详情可去 ./gulpfile.js 中搜索 `inlinecss` 关键字
+var inlinecss = '.w-e-toolbar,.w-e-text-container,.w-e-menu-panel {  padding: 0;  margin: 0;  box-sizing: border-box;}.w-e-toolbar *,.w-e-text-container *,.w-e-menu-panel * {  padding: 0;  margin: 0;  box-sizing: border-box;}.w-e-clear-fix:after {  content: "";  display: table;  clear: both;}.w-e-toolbar .w-e-droplist {  position: absolute;  left: 0;  top: 0;  background-color: #fff;  border: 1px solid #f1f1f1;  border-right-color: #ccc;  border-bottom-color: #ccc;}.w-e-toolbar .w-e-droplist .w-e-dp-title {  text-align: center;  color: #999;  line-height: 2;  border-bottom: 1px solid #f1f1f1;  font-size: 13px;}.w-e-toolbar .w-e-droplist ul.w-e-list {  list-style: none;  line-height: 1;}.w-e-toolbar .w-e-droplist ul.w-e-list li.w-e-item {  color: #333;  padding: 5px 0;}.w-e-toolbar .w-e-droplist ul.w-e-list li.w-e-item:hover {  background-color: #f1f1f1;}.w-e-toolbar .w-e-droplist ul.w-e-block {  list-style: none;  text-align: left;  padding: 5px;}.w-e-toolbar .w-e-droplist ul.w-e-block li.w-e-item {  display: inline-block;  *display: inline;  *zoom: 1;  padding: 3px 5px;}.w-e-toolbar .w-e-droplist ul.w-e-block li.w-e-item:hover {  background-color: #f1f1f1;}@font-face {  font-family: \'w-e-icon\';  src: url(data:application/x-font-woff;charset=utf-8;base64,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) format(\'truetype\');  font-weight: normal;  font-style: normal;}[class^="w-e-icon-"],[class*=" w-e-icon-"] {  /* use !important to prevent issues with browser extensions that change fonts */  font-family: \'w-e-icon\' !important;  speak: none;  font-style: normal;  font-weight: normal;  font-variant: normal;  text-transform: none;  line-height: 1;  /* Better Font Rendering =========== */  -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale;}.w-e-icon-close:before {  content: "\\f00d";}.w-e-icon-upload2:before {  content: "\\e9c6";}.w-e-icon-trash-o:before {  content: "\\f014";}.w-e-icon-header:before {  content: "\\f1dc";}.w-e-icon-pencil2:before {  content: "\\e906";}.w-e-icon-paint-brush:before {  content: "\\f1fc";}.w-e-icon-image:before {  content: "\\e90d";}.w-e-icon-play:before {  content: "\\e912";}.w-e-icon-location:before {  content: "\\e947";}.w-e-icon-undo:before {  content: "\\e965";}.w-e-icon-redo:before {  content: "\\e966";}.w-e-icon-quotes-left:before {  content: "\\e977";}.w-e-icon-list-numbered:before {  content: "\\e9b9";}.w-e-icon-list2:before {  content: "\\e9bb";}.w-e-icon-link:before {  content: "\\e9cb";}.w-e-icon-happy:before {  content: "\\e9df";}.w-e-icon-bold:before {  content: "\\ea62";}.w-e-icon-underline:before {  content: "\\ea63";}.w-e-icon-italic:before {  content: "\\ea64";}.w-e-icon-strikethrough:before {  content: "\\ea65";}.w-e-icon-table2:before {  content: "\\ea71";}.w-e-icon-paragraph-left:before {  content: "\\ea77";}.w-e-icon-paragraph-center:before {  content: "\\ea78";}.w-e-icon-paragraph-right:before {  content: "\\ea79";}.w-e-icon-terminal:before {  content: "\\f120";}.w-e-icon-page-break:before {  content: "\\ea68";}.w-e-icon-cancel-circle:before {  content: "\\ea0d";}.w-e-icon-font:before {  content: "\\ea5c";}.w-e-icon-text-heigh:before {  content: "\\ea5f";}.w-e-toolbar {  display: -webkit-box;  display: -ms-flexbox;  display: flex;  padding: 0 5px;  /* flex-wrap: wrap; */  /* 单个菜单 */}.w-e-toolbar .w-e-menu {  position: relative;  text-align: center;  padding: 5px 10px;  cursor: pointer;}.w-e-toolbar .w-e-menu i {  color: #999;}.w-e-toolbar .w-e-menu:hover i {  color: #333;}.w-e-toolbar .w-e-active i {  color: #1e88e5;}.w-e-toolbar .w-e-active:hover i {  color: #1e88e5;}.w-e-text-container .w-e-panel-container {  position: absolute;  top: 0;  left: 50%;  border: 1px solid #ccc;  border-top: 0;  box-shadow: 1px 1px 2px #ccc;  color: #333;  background-color: #fff;  /* 为 emotion panel 定制的样式 */  /* 上传图片的 panel 定制样式 */}.w-e-text-container .w-e-panel-container .w-e-panel-close {  position: absolute;  right: 0;  top: 0;  padding: 5px;  margin: 2px 5px 0 0;  cursor: pointer;  color: #999;}.w-e-text-container .w-e-panel-container .w-e-panel-close:hover {  color: #333;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title {  list-style: none;  display: -webkit-box;  display: -ms-flexbox;  display: flex;  font-size: 14px;  margin: 2px 10px 0 10px;  border-bottom: 1px solid #f1f1f1;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title .w-e-item {  padding: 3px 5px;  color: #999;  cursor: pointer;  margin: 0 3px;  position: relative;  top: 1px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-title .w-e-active {  color: #333;  border-bottom: 1px solid #333;  cursor: default;  font-weight: 700;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content {  padding: 10px 15px 10px 15px;  font-size: 16px;  /* 输入框的样式 */  /* 按钮的样式 */}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input:focus,.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea:focus,.w-e-text-container .w-e-panel-container .w-e-panel-tab-content button:focus {  outline: none;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea {  width: 100%;  border: 1px solid #ccc;  padding: 5px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content textarea:focus {  border-color: #1e88e5;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text] {  border: none;  border-bottom: 1px solid #ccc;  font-size: 14px;  height: 20px;  color: #333;  text-align: left;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text].small {  width: 30px;  text-align: center;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text].block {  display: block;  width: 100%;  margin: 10px 0;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content input[type=text]:focus {  border-bottom: 2px solid #1e88e5;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button {  font-size: 14px;  color: #1e88e5;  border: none;  padding: 5px 10px;  background-color: #fff;  cursor: pointer;  border-radius: 3px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.left {  float: left;  margin-right: 10px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.right {  float: right;  margin-left: 10px;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.gray {  color: #999;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button.red {  color: #c24f4a;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container button:hover {  background-color: #f1f1f1;}.w-e-text-container .w-e-panel-container .w-e-panel-tab-content .w-e-button-container:after {  content: "";  display: table;  clear: both;}.w-e-text-container .w-e-panel-container .w-e-emoticon-container .w-e-item {  cursor: pointer;  font-size: 18px;  padding: 0 3px;  display: inline-block;  *display: inline;  *zoom: 1;}.w-e-text-container .w-e-panel-container .w-e-up-img-container {  text-align: center;}.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn {  display: inline-block;  *display: inline;  *zoom: 1;  color: #999;  cursor: pointer;  font-size: 60px;  line-height: 1;}.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn:hover {  color: #333;}.w-e-text-container {  position: relative;}.w-e-text-container .w-e-progress {  position: absolute;  background-color: #1e88e5;  bottom: 0;  left: 0;  height: 1px;}.w-e-text {  padding: 0 10px;  overflow-y: scroll;}.w-e-text p,.w-e-text h1,.w-e-text h2,.w-e-text h3,.w-e-text h4,.w-e-text h5,.w-e-text table,.w-e-text pre {  margin: 10px 0;  line-height: 1.5;}.w-e-text ul,.w-e-text ol {  margin: 10px 0 10px 20px;}.w-e-text blockquote {  display: block;  border-left: 8px solid #d0e5f2;  padding: 5px 10px;  margin: 10px 0;  line-height: 1.4;  font-size: 100%;  background-color: #f1f1f1;}.w-e-text code {  display: inline-block;  *display: inline;  *zoom: 1;  background-color: #f1f1f1;  border-radius: 3px;  padding: 3px 5px;  margin: 0 3px;}.w-e-text pre code {  display: block;}.w-e-text table {  border-top: 1px solid #ccc;  border-left: 1px solid #ccc;}.w-e-text table td,.w-e-text table th {  border-bottom: 1px solid #ccc;  border-right: 1px solid #ccc;  padding: 3px 5px;}.w-e-text table th {  border-bottom: 2px solid #ccc;  text-align: center;}.w-e-text:focus {  outline: none;}.w-e-text img {  cursor: pointer;}.w-e-text img:hover {  box-shadow: 0 0 5px #333;}';
 
 // 将 css 代码添加到 <style> 中
-var style = document.createElement("style");
-style.type = "text/css";
+var style = document.createElement('style');
+style.type = 'text/css';
 style.innerHTML = inlinecss;
-document.getElementsByTagName("HEAD").item(0).appendChild(style);
+document.getElementsByTagName('HEAD').item(0).appendChild(style);
 
 // 返回
 var index = window.wangEditor || Editor;

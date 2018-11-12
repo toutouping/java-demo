@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.promotion.core.dao.NoticeExportDao">
+    <resultMap type="com.ssm.promotion.core.entity.NoticeExport" id="NoticeExport">
+        <result property="versionNo" column="VERSION_NO"/>
+        <result property="headerContent" column="HEADER_CONTENT"/>
+        <result property="contactUser" column="CONTACT_USER"/>
+        <result property="contactPhone" column="CONTACT_PHONE"/>
+        <result property="detailContent" column="DETAIL_CONTENT"/>
+    </resultMap>
+    
+    <insert id="insertWord" parameterType="NoticeExport">
+    	INSERT INTO CMBNOTICEWORD (VERSION_NO, HEADER_CONTENT, CONTACT_USER, CONTACT_PHONE, DETAIL_CONTENT, ID, CREATE_DATE)
+    	                  VALUES( #{versionNo}, #{headerContent}, #{contactUser}, #{contactPhone}, #{detailContent}, SEQ_CMBNOTICEWORD_ID.nextval, sysdate)
+    </insert>
+</mapper> 

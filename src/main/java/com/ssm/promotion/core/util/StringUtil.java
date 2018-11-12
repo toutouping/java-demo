@@ -3,7 +3,7 @@ package com.ssm.promotion.core.util;
 /**
  * @author llp
  * @project_name java-demo
- * @date 2017-3-1
+ * @date 2018-08-08
  */
 public class StringUtil {
 
